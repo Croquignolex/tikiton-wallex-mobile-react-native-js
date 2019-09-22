@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
+
 import sliders from './data/sliders'
+import Sign from './screens/sign'
+//import Navigation from './navigation/navigation'
 
 class App extends React.Component {
     constructor(props) {
@@ -21,9 +23,8 @@ class App extends React.Component {
     render() {
         if(this.state.showRealApp) {
             return (
-                <View style={styles.container}>
-                    <Text>Open up App.js to start working on your app!</Text>
-                </View>
+                <Sign />
+                //<Navigation />
             );
         } else {
             return (
@@ -37,14 +38,5 @@ class App extends React.Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
 
 export default App
