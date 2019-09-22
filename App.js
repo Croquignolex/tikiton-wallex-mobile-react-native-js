@@ -21,7 +21,7 @@ class App extends React.Component {
     }
 
     render() {
-        if(this.state.showRealApp) {
+        if(this.state.showRealApp || true) {
             return (
                 <Sign />
                 //<Navigation />
