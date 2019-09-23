@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native'
-import colors from '../helpers/colors'
+import COLORS from '../helpers/colors'
 import images from '../helpers/images'
 
 const styles = StyleSheet.create({
     title: {
         fontSize: 28,
-        color: colors.white,
+        color: COLORS.white,
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 20
     },
     text: {
-        color: colors.white,
+        color: COLORS.white,
         fontSize: 18,
         paddingLeft: 40,
         paddingRight: 40
@@ -32,7 +32,7 @@ const sliders = [
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: colors.theme
+        backgroundColor: COLORS.theme
     },
     {
         key: 'expenses',
@@ -42,7 +42,7 @@ const sliders = [
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: colors.orange
+        backgroundColor: COLORS.orange
     },
     {
         key: 'settings',
@@ -52,7 +52,7 @@ const sliders = [
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: colors.yellow
+        backgroundColor: COLORS.yellow
     },
     {
         key: 'cloud',
@@ -62,7 +62,7 @@ const sliders = [
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: colors.purple
+        backgroundColor: COLORS.purple
     },
 ];
 

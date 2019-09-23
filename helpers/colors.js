@@ -1,4 +1,5 @@
-const colors = {
+const COLORS = {
+    // Primary colors
     white: '#FFF',
     black: '#000',
     lightWhite: '#F4F5F7',
@@ -7,9 +8,12 @@ const colors = {
     orange: '#FF3D00',
     yellow: '#FEBE29',
     purple: '#D500F9',
-    // Social media
+    // Secondary colors
+    muted: '#ADB5BD',
+    input: '#DCDCDC',
+    // Social media colors
     facebook: '#3B5998',
     google: '#db3236',
 };
 
-export default colors
+export default COLORS

@@ -1,32 +1,76 @@
 import React from 'react'
-import { StyleSheet, StatusBar, SafeAreaView, Dimensions, TouchableOpacity, Text} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import colors from '../helpers/colors'
+import COLORS from '../helpers/colors'
+import STYLES from '../helpers/styles'
+import Input from '../components/input'
+import Checkbox from '../components/checkbox'
+import SocialMediaButton from '../components/social-media-button'
+import {StyleSheet, StatusBar, SafeAreaView, Dimensions, Text, KeyboardAvoidingView, TouchableOpacity} from 'react-native'
 
 class Sign extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            hasAgree: false
+        }
+    }
+
+    agreeHandle = () => {
+        this.setState(state => {
+            return {hasAgree: !state.hasAgree}
+        })
+    };
+
     render() {
         return (
-            <SafeAreaView style={[styles.mainContainer, styles.center]}>
+            <SafeAreaView style={[styles.mainContainer, STYLES.middle]}>
+                {/*Hide status bar*/}
                 <StatusBar hidden />
-                <SafeAreaView style={[{flex: 1}, styles.center]}>
-                    <SafeAreaView style={[styles.signContainer, styles.blackShadow]}>
-                        <SafeAreaView style={[styles.socialConnect, styles.center]}>
-                            <Text color={colors.lightGray} size={12}>
-                                Sign up with
-                            </Text>
+                <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
+                    <SafeAreaView style={[styles.signContainer, STYLES.blackShadow]}>
+                         {/*Start social media connect area */}
+                        <SafeAreaView style={[styles.socialConnect, STYLES.middle]}>
+                            {/*Text*/}
+                            <Text style={styles.indicationText}>Sign up with</Text>
+                            {/*Start buttons area*/}
                             <SafeAreaView style={{marginTop: 16, flexDirection: 'row'}}>
-                                <TouchableOpacity style={[styles.socialButtons, styles.blackShadow, styles.center, {marginRight: 30, backgroundColor: colors.facebook}]} activeOpacity={0.8}>
-                                    <SafeAreaView style={{flexDirection: 'row'}}>
-                                        <Icon name='facebook' size={16} color={colors.white} style={styles.icon}/>
-                                        <Text style={styles.socialTextButtons}>FACEBOOK</Text>
+                                {/*Start social media buttons*/}
+                                <SocialMediaButton button={{icon: 'facebook', text: 'FACEBOOK', style: {marginRight: 30, backgroundColor: COLORS.facebook}}}/>
+                                <SocialMediaButton button={{icon: 'google', text: 'GOOGLE', style: {backgroundColor: COLORS.google}}}/>
+                                {/*End social media buttons*/}
+                            </SafeAreaView>
+                            {/*End buttons area*/}
+                        </SafeAreaView>
+                        {/*End social media connect area*/}
+                        <SafeAreaView style={{flex: 1}}>
+                            {/*Title*/}
+                            <SafeAreaView style={[{flex: 0.17}, STYLES.middle]}>
+                                <Text style={styles.indicationText}>Or sign up the classic way</Text>
+                            </SafeAreaView>
+                            {/*Sign area*/}
+                            <SafeAreaView style={[{flex: 1}, STYLES.center]}>
+                                <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
+                                    {/*Input area*/}
+                                    <SafeAreaView style={{marginBottom: 15, width: width * 0.8}}>
+                                        <Input input={{placeholder: 'Email', icon: 'at', width: width}}/>
                                     </SafeAreaView>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.socialButtons, styles.blackShadow, styles.center, {backgroundColor: colors.google}]} activeOpacity={0.8}>
-                                    <SafeAreaView style={{flexDirection: 'row'}}>
-                                        <Icon name='google' size={16} color={colors.white} style={styles.icon}/>
-                                        <Text style={styles.socialTextButtons}>GOOGLE</Text>
+                                    {/*Checkbox are*/}
+                                    <SafeAreaView style={{flexDirection: 'row', width: width * 0.75}}>
+                                        <Checkbox checkbox={{text: 'I agree with the', check: this.state.hasAgree}} onPressHandle={this.agreeHandle}/>
+                                        {/*Privacy link*/}
+                                        <TouchableOpacity style={{width: 100, color: 'transparent'}} activeOpacity={0.8}>
+                                            <Text style={{color: COLORS.theme, fontSize: 14}}> Privacy policy</Text>
+                                        </TouchableOpacity>
                                     </SafeAreaView>
-                                </TouchableOpacity>
+                                    {/*Button are*/}
+                                    <SafeAreaView style={STYLES.middle}>
+                                        <TouchableOpacity style={[styles.createButton, STYLES.middle]} activeOpacity={0.8}>
+                                            <Text style={{color: COLORS.white, fontSize: 14}}>
+                                                CREATE ACCOUNT
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </SafeAreaView>
+                                </KeyboardAvoidingView>
                             </SafeAreaView>
                         </SafeAreaView>
                     </SafeAreaView>
@@ -41,48 +85,32 @@ const { width, height } = Dimensions.get("screen");
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.theme
+        backgroundColor: COLORS.theme
     },
     signContainer: {
+        borderRadius: 4,
+        overflow: "hidden",
         width: width * 0.9,
         height: height * 0.78,
-        backgroundColor: colors.lightWhite,
-        borderRadius: 4,
-        overflow: "hidden"
+        backgroundColor: COLORS.lightWhite
     },
     socialConnect: {
         flex: 0.25,
-        backgroundColor: colors.white,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.lightGray
+        backgroundColor: COLORS.white,
+        borderColor: COLORS.lightGray,
+        borderBottomWidth: StyleSheet.hairlineWidth
     },
-    socialButtons: {
-        width: 120,
-        height: 40,
-        borderRadius: 3
+    indicationText: {
+        fontSize: 12,
+        color: COLORS.lightGray
     },
-    socialTextButtons: {
-        color: colors.white,
-        fontWeight: "800",
-        fontSize: 14
-    },
-    center: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    blackShadow: {
-        shadowColor: colors.black,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-    },
-    icon: {
-        marginTop: 2,
-        marginRight: 5
+    createButton: {
+        marginTop: 25,
+        borderRadius: 3,
+        height: 16 * 2.75,
+        width: width * 0.5,
+        backgroundColor: COLORS.theme,
+
     }
 });
 
