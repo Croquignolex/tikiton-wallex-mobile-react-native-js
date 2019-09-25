@@ -1,5 +1,6 @@
-/*import { createStackNavigator, createAppContainer } from 'react-navigation'
 import Sign from '../screens/sign'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 const SignStackNavigator = createStackNavigator({
     sign: {
@@ -10,6 +11,6 @@ const SignStackNavigator = createStackNavigator({
     }
 });
 
-export default createAppContainer(SignStackNavigator)*/
+export default createAppContainer(SignStackNavigator)
 
 

@@ -2,8 +2,7 @@ import React from 'react'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
 import sliders from './data/sliders'
-import Sign from './screens/sign'
-//import Navigation from './navigation/navigation'
+import Navigation from './navigation/navigation'
 
 class App extends React.Component {
     constructor(props) {
@@ -23,8 +22,7 @@ class App extends React.Component {
     render() {
         if(this.state.showRealApp) {
             return (
-                <Sign />
-                //<Navigation />
+                <Navigation />
             );
         } else {
             return (

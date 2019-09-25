@@ -17,38 +17,38 @@ const styles = StyleSheet.create({
         paddingRight: 40
     },
     image: {
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 250,
         resizeMode: 'contain'
     }
 });
 
 const sliders = [
     {
-        key: 'schedule',
-        title: 'Schedule',
-        text: 'Every thing ready for you to manage efficiently your incomes and expenses',
-        image: IMAGES.slider.calendar,
+        key: 'secure',
+        title: 'Secure',
+        text: 'Wallex is your free and secure wallet management app',
+        image: IMAGES.slider.secure,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
         backgroundColor: COLORS.theme
     },
     {
-        key: 'expenses',
-        title: 'Expenses',
-        text: 'Easy to track your expenses, have a total control on what you spend',
-        image: IMAGES.slider.restaurants,
+        key: 'schedule',
+        title: 'Schedule',
+        text: 'Easy to track your expenses, have a total control on it',
+        image: IMAGES.slider.schedule,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: COLORS.blue
+        backgroundColor: COLORS.purple
     },
     {
-        key: 'settings',
-        title: 'Settings',
-        text: 'You can decide on what should be display and how it should be display',
-        image: IMAGES.slider.settings,
+        key: 'dashboard',
+        title: 'Dashboard',
+        text: 'All data in the same place and simply displayed',
+        image: IMAGES.slider.dashboard,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
@@ -62,7 +62,7 @@ const sliders = [
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: COLORS.purple
+        backgroundColor: COLORS.blue
     },
 ];
 
