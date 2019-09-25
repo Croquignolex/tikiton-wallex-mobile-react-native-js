@@ -16,15 +16,15 @@ class Checkbox extends React.Component {
     };
 
     render() {
-        const {text, check} = this.props.checkbox;
-        const checker = check ? <Icon name='check' size={14} color={COLORS.theme}/> : <Text></Text>;
+        const {text, check, color} = this.props.checkbox;
+        const checker = check ? <Icon name='check' size={14} color={color}/> : <Text />;
 
         return (
             <TouchableOpacity onPress={this.onPressHandle} activeOpacity={0.8} style={styles.checkbox}>
-                <View style={[styles.checkboxView, STYLES.middle]}>
+                <View style={[styles.checkboxView, STYLES.middle, {borderColor: color}]}>
                     {checker}
                 </View>
-                <Text>{text}</Text>
+                <Text style={{color: color}}>{text}</Text>
             </TouchableOpacity>
         )
     }
@@ -33,6 +33,7 @@ class Checkbox extends React.Component {
         checkbox: PropTypes.shape({
             text: PropTypes.string.isRequired,
             check: PropTypes.bool.isRequired,
+            color: PropTypes.string.isRequired,
         }).isRequired,
         onPressHandle: PropTypes.func.isRequired
     }
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         marginRight: 10,
         borderRadius: 6,
-        borderColor: COLORS.theme
     },
 });
 

@@ -12,12 +12,12 @@ class Input extends React.Component {
     }
 
     render() {
-        const {placeholder, icon, width} = this.props.input;
+        const {placeholder, icon, width, color} = this.props.input;
 
         return (
             <View style={styles.mainContainer}>
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
-                    <Icon name={icon} size={14} color={COLORS.black} style={{marginRight: 12}}/>
+                    <Icon name={icon} size={14} color={color} style={{marginRight: 12}}/>
                     <TextInput
                         style={styles.inputStyles}
                         placeholderTextColor={COLORS.muted}
@@ -33,7 +33,7 @@ class Input extends React.Component {
         input: PropTypes.shape({
             placeholder: PropTypes.string.isRequired,
             icon: PropTypes.string.isRequired,
-            width: PropTypes.number.isRequired,
+            color: PropTypes.string.isRequired
         }).isRequired
     }
 }
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     inputStyles: {
         flex: 1,
-        color: COLORS.input,
+        color: COLORS.black,
         fontSize: 16 * 0.875,
         textDecorationColor: 'transparent',
         textShadowColor: 'transparent',

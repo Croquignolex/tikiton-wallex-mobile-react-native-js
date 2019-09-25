@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import COLORS from '../helpers/colors'
-import images from '../helpers/images'
+import IMAGES from '../helpers/images'
 
 const styles = StyleSheet.create({
     title: {
@@ -28,7 +28,7 @@ const sliders = [
         key: 'schedule',
         title: 'Schedule',
         text: 'Every thing ready for you to manage efficiently your incomes and expenses',
-        image: images.slider.calendar,
+        image: IMAGES.slider.calendar,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
@@ -38,17 +38,17 @@ const sliders = [
         key: 'expenses',
         title: 'Expenses',
         text: 'Easy to track your expenses, have a total control on what you spend',
-        image: images.slider.restaurants,
+        image: IMAGES.slider.restaurants,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
-        backgroundColor: COLORS.orange
+        backgroundColor: COLORS.blue
     },
     {
         key: 'settings',
         title: 'Settings',
         text: 'You can decide on what should be display and how it should be display',
-        image: images.slider.settings,
+        image: IMAGES.slider.settings,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
@@ -58,7 +58,7 @@ const sliders = [
         key: 'cloud',
         title: 'Cloud',
         text: 'All your transaction are cloud base, jump in and getting started',
-        image: images.slider.cloud,
+        image: IMAGES.slider.cloud,
         titleStyle: styles.title,
         textStyle: styles.text,
         imageStyle: styles.image,
