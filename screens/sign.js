@@ -11,14 +11,28 @@ class Sign extends React.Component {
         super(props);
 
         this.state = {
-            hasAgree: false
+            hasAgree: false,
+            email: ''
         }
     }
 
     agreeHandle = () => {
         this.setState(state => {
-            return {hasAgree: !state.hasAgree}
+            state.hasAgree = !state.hasAgree;
+            return state;
         })
+    };
+
+    emailHandle = (email) => {
+        this.setState(state => {
+            state.email = email;
+            return state;
+        })
+    };
+
+    registerHandle = () => {
+        if(this.state.email === 'gpetitalex10@gmail.com') this.props.navigation.navigate('dashboard');
+        else console.log('Error email')
     };
 
     render() {
@@ -32,7 +46,7 @@ class Sign extends React.Component {
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
                         {/*Inputs area*/}
                         <SafeAreaView style={{marginBottom: 15, width: width * 0.8}}>
-                            <Input input={{placeholder: 'Email', icon: 'at', color: COLORS.theme}}/>
+                            <Input input={{placeholder: 'Email', icon: 'at', color: COLORS.theme, email: this.state.email}} onInputHandle={this.emailHandle}/>
                         </SafeAreaView>
                         {/*Checkbox are*/}
                         <SafeAreaView style={{flexDirection: 'row', width: width * 0.75}}>
@@ -44,7 +58,7 @@ class Sign extends React.Component {
                         </SafeAreaView>
                         {/*Button are*/}
                         <SafeAreaView style={STYLES.middle}>
-                            <TouchableOpacity style={[styles.createButton, STYLES.middle]} activeOpacity={0.8}>
+                            <TouchableOpacity style={[styles.createButton, STYLES.middle]} activeOpacity={0.8} onPress={this.registerHandle}>
                                 <Text style={[{color: COLORS.theme}, styles.createButtonText]}>
                                     SUBMIT
                                 </Text>

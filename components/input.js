@@ -11,8 +11,12 @@ class Input extends React.Component {
         super(props);
     }
 
+    onInputHandle = (value) => {
+        this.props.onInputHandle(value);
+    };
+
     render() {
-        const {placeholder, icon, width, color} = this.props.input;
+        const {placeholder, icon, color, email} = this.props.input;
 
         return (
             <View style={styles.mainContainer}>
@@ -23,6 +27,8 @@ class Input extends React.Component {
                         placeholderTextColor={COLORS.muted}
                         underlineColorAndroid="transparent"
                         placeholder={placeholder}
+                        onChangeText={this.onInputHandle}
+                        value={email}
                     />
                 </View>
             </View>
@@ -33,8 +39,10 @@ class Input extends React.Component {
         input: PropTypes.shape({
             placeholder: PropTypes.string.isRequired,
             icon: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired
-        }).isRequired
+            color: PropTypes.string.isRequired,
+            email: PropTypes.string.isRequired,
+        }).isRequired,
+        onInputHandle: PropTypes.func.isRequired
     }
 }
 
