@@ -1,3 +1,4 @@
+import Legal from '../screens/legal'
 import Login from '../screens/auth/login'
 import Dashboard from '../screens/dashboard'
 import Register from '../screens/auth/register'
@@ -30,7 +31,13 @@ const SignStackNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+    legal: {
+        screen: Legal,
+        navigationOptions: {
+            header: null
+        }
+    },
 });
 
 export default createAppContainer(SignStackNavigator)

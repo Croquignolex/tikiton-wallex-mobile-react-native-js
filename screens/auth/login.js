@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native'
+import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
 
-import COLORS from '../../helpers/colors'
 import STYLES from '../../helpers/styles'
 import IMAGES from '../../helpers/images'
 
@@ -14,7 +13,6 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
-            hasAgree: false,
             email: '',
             password: '',
         }
@@ -29,20 +27,20 @@ class Login extends React.Component {
     };
 
     handleRegister = () => {
-        this.props.navigation.navigate('dashboard');
+        this.props.navigation.navigate('register');
     };
 
     handleForgottenPassword = () => {
-        this.props.navigation.navigate('dashboard');
+        this.props.navigation.navigate('password');
     };
 
     render() {
         return (
-            <KeyboardAvoidingView style={[styles.mainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+            <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
                 <View style={{flex: 3}}>
                     {/*Logo*/}
                     <Image
-                        style={styles.logo}
+                        style={STYLES.authLogo}
                         source={IMAGES.logo}
                     />
                 </View>
@@ -69,26 +67,26 @@ class Login extends React.Component {
                         text={'LOGIN'}
                         activeOpacity={0.5}
                         handleOnPress={this.handleLogin}
-                        style={[styles.createButton, STYLES.middle]}
-                        textStyle={styles.whiteText}
+                        style={[STYLES.authSubmitButton, STYLES.middle]}
+                        textStyle={STYLES.authWhiteText}
                     />
                 </View>
                 <View style={{flex: 1}}>
                     {/*Register link*/}
                     <Button
                         activeOpacity={0.7}
-                        textStyle={styles.whiteText}
+                        textStyle={STYLES.authWhiteText}
                         text={'I do not have an account'}
                         handleOnPress={this.handleRegister}
-                        style={[styles.link, STYLES.middle]}
+                        style={[ STYLES.authLink, STYLES.middle]}
                     />
                     {/*Forgotten password link*/}
                     <Button
                         activeOpacity={0.7}
-                        textStyle={styles.whiteText}
+                        textStyle={STYLES.authWhiteText}
                         text={'I have forgot my password'}
                         handleOnPress={this.handleForgottenPassword}
-                        style={[{marginTop: 10}, styles.link, STYLES.middle]}
+                        style={[{marginTop: 10}, STYLES.authLink, STYLES.middle]}
                     />
                 </View>
             </KeyboardAvoidingView>
@@ -96,37 +94,6 @@ class Login extends React.Component {
     }
 }
 
-const { width, height } = Dimensions.get("screen");
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        backgroundColor: COLORS.theme
-    },
-    logo: {
-        width: 200,
-        height: 200,
-        resizeMode: 'contain',
-        marginTop: height * 0.1
-    },
-    createButton: {
-        height: 50,
-        marginTop: 25,
-        borderWidth: 1,
-        borderRadius: 50,
-        width: width * 0.8,
-        backgroundColor: COLORS.theme,
-        borderColor: COLORS.white
-    },
-    whiteText: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: COLORS.white
-    },
-    link: {
-        width: width * 0.8,
-        flexDirection: 'row'
-    }
-});
+const { width } = Dimensions.get("screen");
 
 export default Login

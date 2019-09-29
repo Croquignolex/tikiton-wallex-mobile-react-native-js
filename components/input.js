@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { SafeAreaView, View, TextInput, StyleSheet } from 'react-native'
+import { SafeAreaView, View, TextInput, StyleSheet, Text } from 'react-native'
 
 import COLORS from "../helpers/colors";
 import STYLES from "../helpers/styles";
 
 function CustomInput({areaStyle, icon, iconColor, iconStyle, isPassword, handleChangeText, ...props}) {
-    const inputIcon = icon === '' ? null : (<Icon size={14}
+    const inputIcon = icon === '' ? <Text /> : (<Icon size={14}
                                                   name={icon}
                                                   color={iconColor}
                                                   style={iconStyle}

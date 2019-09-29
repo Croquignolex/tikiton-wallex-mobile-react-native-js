@@ -6,7 +6,7 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import STYLES from "../helpers/styles";
 
 function CustomButton({textStyle, icon, iconColor, iconStyle, text, handleOnPress, ...props}) {
-    const buttonIcon = icon === '' ? null : (<Icon size={14}
+    const buttonIcon = icon === '' ? <Text /> : (<Icon size={14}
                                                   name={icon}
                                                   color={iconColor}
                                                   style={iconStyle}
@@ -27,7 +27,7 @@ function CustomButton({textStyle, icon, iconColor, iconStyle, text, handleOnPres
 CustomButton.propTypes = {
     ...TouchableOpacity.propTypes,
     text: PropTypes.string,
-    handleOnPress: PropTypes.func.required,
+    handleOnPress: PropTypes.func.isRequired,
     textStyle: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.array
