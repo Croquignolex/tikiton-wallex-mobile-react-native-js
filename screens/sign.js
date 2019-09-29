@@ -1,10 +1,20 @@
+import {
+    Text,
+    StyleSheet,
+    Dimensions,
+    SafeAreaView,
+    TouchableOpacity,
+    KeyboardAvoidingView
+} from 'react-native'
 import React from 'react'
+import { Image } from 'react-native-elements'
+
 import COLORS from '../helpers/colors'
 import STYLES from '../helpers/styles'
 import IMAGES from '../helpers/images'
+
 import Input from '../components/input'
 import Checkbox from '../components/checkbox'
-import {SafeAreaView, Image, TouchableOpacity, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
 class Sign extends React.Component {
     constructor(props) {
@@ -38,16 +48,18 @@ class Sign extends React.Component {
     render() {
         return (
             <SafeAreaView style={[styles.mainContainer, STYLES.middle]}>
-                {/*Logo area*/}
+                {/*Start Logo*/}
                 <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
                     <Image source={IMAGES.logo} style={styles.logo} />
                 </SafeAreaView>
+                {/*End Logo*/}
                 <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
-                        {/*Inputs area*/}
+                        {/*Start e-mail input*/}
                         <SafeAreaView style={{marginBottom: 15, width: width * 0.8}}>
                             <Input input={{placeholder: 'Email', icon: 'at', color: COLORS.theme, email: this.state.email}} onInputHandle={this.emailHandle}/>
                         </SafeAreaView>
+                        {/*End e-mail input*/}
                         {/*Checkbox are*/}
                         <SafeAreaView style={{flexDirection: 'row', width: width * 0.75}}>
                             <Checkbox checkbox={{text: 'I agree with the', check: this.state.hasAgree, color: COLORS.white}} onPressHandle={this.agreeHandle}/>

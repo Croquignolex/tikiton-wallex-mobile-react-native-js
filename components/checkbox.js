@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Icon } from 'react-native-elements'
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 
 import COLORS from "../helpers/colors";

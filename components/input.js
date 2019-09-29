@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Icon } from 'react-native-elements'
 import { View, TextInput, StyleSheet } from 'react-native'
 
 import COLORS from "../helpers/colors";
@@ -21,7 +21,7 @@ class Input extends React.Component {
         return (
             <View style={styles.mainContainer}>
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
-                    <Icon name={icon} size={14} color={color} style={{marginRight: 12}}/>
+                    <Icon type='font-awesome' name={icon} size={14} color={color} iconStyle={{marginRight: 12}}/>
                     <TextInput
                         style={styles.inputStyles}
                         placeholderTextColor={COLORS.muted}
