@@ -9,20 +9,21 @@ import {
 import React from 'react'
 import { Image } from 'react-native-elements'
 
-import COLORS from '../helpers/colors'
-import STYLES from '../helpers/styles'
-import IMAGES from '../helpers/images'
+import COLORS from '../../helpers/colors'
+import STYLES from '../../helpers/styles'
+import IMAGES from '../../helpers/images'
 
-import Input from '../components/input'
-import Checkbox from '../components/checkbox'
+import Input from '../../components/input'
+import Checkbox from '../../components/checkbox'
 
-class Sign extends React.Component {
+class Register extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             hasAgree: false,
-            email: ''
+            email: '',
+            password: '',
         }
     }
 
@@ -33,11 +34,8 @@ class Sign extends React.Component {
         })
     };
 
-    emailHandle = (email) => {
-        this.setState(state => {
-            state.email = email;
-            return state;
-        })
+    handleInput = (value, name) => {
+        this.setState({[name]: value})
     };
 
     registerHandle = () => {
@@ -50,22 +48,41 @@ class Sign extends React.Component {
             <SafeAreaView style={[styles.mainContainer, STYLES.middle]}>
                 {/*Start Logo*/}
                 <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
-                    <Image source={IMAGES.logo} style={styles.logo} />
+                    <Image
+                        source={IMAGES.logo}
+                        style={styles.logo}
+                    />
                 </SafeAreaView>
                 {/*End Logo*/}
                 <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
                         {/*Start e-mail input*/}
                         <SafeAreaView style={{marginBottom: 15, width: width * 0.8}}>
-                            <Input input={{placeholder: 'Email', icon: 'at', color: COLORS.theme, email: this.state.email}} onInputHandle={this.emailHandle}/>
+                            <Input icon={'at'}
+                                   name={'email'}
+                                   placeholder={'Email'}
+                                   value={this.state.email}
+                                   handleChangeText={this.handleInput}
+                            />
                         </SafeAreaView>
                         {/*End e-mail input*/}
+                        {/*Start password input*/}
+                        <SafeAreaView style={{marginBottom: 15, width: width * 0.8}}>
+                            <Input icon={'lock'}
+                                   isPassword={true}
+                                   name={'password'}
+                                   placeholder={'Password'}
+                                   value={this.state.password}
+                                   handleChangeText={this.handleInput}
+                            />
+                        </SafeAreaView>
+                        {/*End password input*/}
                         {/*Checkbox are*/}
                         <SafeAreaView style={{flexDirection: 'row', width: width * 0.75}}>
                             <Checkbox checkbox={{text: 'I agree with the', check: this.state.hasAgree, color: COLORS.white}} onPressHandle={this.agreeHandle}/>
                             {/*Privacy link*/}
                             <TouchableOpacity style={{width: 100, color: 'transparent'}} activeOpacity={0.8}>
-                                 <Text style={styles.indicationText}> Privacy policy</Text>
+                                <Text style={styles.indicationText}> Privacy policy</Text>
                             </TouchableOpacity>
                         </SafeAreaView>
                         {/*Button are*/}
@@ -113,4 +130,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Sign
+export default Register

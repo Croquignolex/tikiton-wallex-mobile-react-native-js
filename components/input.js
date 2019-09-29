@@ -1,50 +1,62 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import { Icon } from 'react-native-elements'
-import { View, TextInput, StyleSheet } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { SafeAreaView, View, TextInput, StyleSheet } from 'react-native'
 
 import COLORS from "../helpers/colors";
 import STYLES from "../helpers/styles";
 
-class Input extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    onInputHandle = (value) => {
-        this.props.onInputHandle(value);
-    };
-
-    render() {
-        const {placeholder, icon, color, email} = this.props.input;
-
-        return (
+function CustomInput({areaStyle, icon, iconColor, iconStyle, isPassword, handleChangeText, ...props}) {
+    const inputIcon = icon === '' ? null : (<Icon size={14}
+                                                  name={icon}
+                                                  color={iconColor}
+                                                  style={iconStyle}
+                                            />);
+    return (
+        <SafeAreaView style={areaStyle}>
             <View style={styles.mainContainer}>
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
-                    <Icon type='font-awesome' name={icon} size={14} color={color} iconStyle={{marginRight: 12}}/>
-                    <TextInput
+                    {inputIcon}
+                    <TextInput {...props}
                         style={styles.inputStyles}
+                        secureTextEntry={isPassword}
                         placeholderTextColor={COLORS.muted}
                         underlineColorAndroid="transparent"
-                        placeholder={placeholder}
-                        onChangeText={this.onInputHandle}
-                        value={email}
+                        onChangeText={(val) => handleChangeText(val, props.name)}
                     />
                 </View>
             </View>
-        )
-    }
-
-    static propTypes = {
-        input: PropTypes.shape({
-            placeholder: PropTypes.string.isRequired,
-            icon: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-            email: PropTypes.string.isRequired,
-        }).isRequired,
-        onInputHandle: PropTypes.func.isRequired
-    }
+        </SafeAreaView>
+    )
 }
+
+CustomInput.propTypes = {
+    ...TextInput.propTypes,
+    icon: PropTypes.string,
+    isPassword: PropTypes.bool,
+    iconColor: PropTypes.string,
+    placeholder: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    handleChangeText: PropTypes.func.isRequired,
+    areaStyle: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
+    iconStyle: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ])
+};
+
+CustomInput.defaultProps = {
+    icon: '',
+    areaStyle: {},
+    placeholder: '',
+    isPassword: false,
+    iconColor: COLORS.theme,
+    iconStyle: {marginRight: 12}
+};
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -52,20 +64,20 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     inputViewStyles: {
-        height: 44,
+        height: 50,
         width: '100%',
-        borderRadius: 4,
+        borderRadius: 50,
         flexDirection: 'row',
         paddingHorizontal: 16,
         backgroundColor: COLORS.white
     },
     inputStyles: {
         flex: 1,
+        fontSize: 15,
         color: COLORS.black,
-        fontSize: 16 * 0.875,
         textDecorationColor: 'transparent',
         textShadowColor: 'transparent',
     }
 });
 
-export default Input
+export default CustomInput

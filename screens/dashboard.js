@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
     }
 
     backHandle = () => {
-        this.props.navigation.navigate('sign');
+        this.props.navigation.navigate('login');
     };
 
     render() {

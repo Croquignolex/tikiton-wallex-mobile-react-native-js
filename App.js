@@ -11,13 +11,11 @@ class App extends React.Component {
         this.state = {
             showRealApp: false
         };
-
-        this.handleDone = this.handleDone.bind(this)
     }
 
-    handleDone() {
+    handleDone = () => {
         this.setState({showRealApp: true})
-    }
+    };
 
     render() {
         if(this.state.showRealApp || true) {
@@ -28,8 +26,8 @@ class App extends React.Component {
             return (
                 <AppIntroSlider
                     slides={sliders}
-                    onDone={this.handleDone}
                     showSkipButton={true}
+                    onDone={this.handleDone}
                     onSkip={this.handleDone}
                 />
             );
