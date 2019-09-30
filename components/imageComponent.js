@@ -6,18 +6,21 @@ import COLORS from "../helpers/colorHelper";
 import STYLES from "../helpers/styleHelper";
 
 //TODO: improve image loading animation
-function CustomImage({areaStyle, ...props}) {
+const CustomImage = ({areaStyle, ...props}) => {
     return (
         <View style={areaStyle}>
-            <View
-                style={styles.mainContainer}
-                accessibilityIgnoresInvertColors={true}
-            >
+            <View style={styles.mainContainer} accessibilityIgnoresInvertColors={true}>
                 <Image {...props} />
             </View>
         </View>
     )
-}
+};
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        backgroundColor: COLORS.theme
+    }
+});
 
 CustomImage.propTypes = {
     ...Image.propTypes,
@@ -30,11 +33,5 @@ CustomImage.propTypes = {
 CustomImage.defaultProps = {
     areaStyle: [STYLES.middle, {flex: 1}]
 };
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        backgroundColor: COLORS.theme
-    }
-});
 
 export default CustomImage

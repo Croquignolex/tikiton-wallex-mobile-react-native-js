@@ -1,6 +1,6 @@
-import React from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import React, { useState } from 'react'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
 import reducer from './reducers'
@@ -9,37 +9,19 @@ import Navigation from './navigation/navigation'
 
 const store = createStore(reducer);
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+const App = () => {
 
-        this.state = {
-            showRealApp: false
-        };
-    }
+    const [showRealApp, setShowRealApp] = useState(false);
 
-    handleDone = () => {
-        this.setState({showRealApp: true})
-    };
+    const render = showRealApp || true
+        ? <Provider store={store}><Navigation /></Provider>
+        : <AppIntroSlider slides={SLIDERS}
+                          showSkipButton={true}
+                          onDone={() => setShowRealApp(true)}
+                          onSkip={() => setShowRealApp(true)}
+          />;
 
-    render() {
-        if(this.state.showRealApp || true) {
-            return (
-                <Provider store={store}>
-                    <Navigation />
-                </Provider>
-            );
-        } else {
-            return (
-                <AppIntroSlider
-                    slides={SLIDERS}
-                    showSkipButton={true}
-                    onDone={this.handleDone}
-                    onSkip={this.handleDone}
-                />
-            );
-        }
-    }
-}
+    return (render)
+};
 
 export default App
