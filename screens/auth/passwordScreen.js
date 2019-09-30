@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useState } from 'react'
 import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
 
@@ -16,17 +17,13 @@ const Password = ({navigation}) => {
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
                 {/*Logo*/}
-                <Image
-                    style={STYLES.authLogo}
-                    source={IMAGES.logo}
-                />
+                <Image style={STYLES.authLogo} source={IMAGES.logo}/>
             </View>
             <View style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       name={'email'}
-                       placeholder={'Email'}
                        value={password}
+                       placeholder={'Email'}
                        handleChangeText={(value) => setPassword(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
@@ -54,5 +51,9 @@ const Password = ({navigation}) => {
 };
 
 const { width } = Dimensions.get("screen");
+
+Password.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default Password

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import PropTypes from "prop-types";
+import React, { useState, useEffect } from 'react'
 import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
@@ -8,35 +9,42 @@ import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 
-const Login = ({navigation}) => {
+import { AUTH } from '../../helpers/actionTypes/authActionType'
+
+const Login = ({navigation, ...props}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleLogin = () => {
+        //TODO: API call
+        // props.actions.auth()
+        props.dispatch({type: AUTH})
+    };
+
+    useEffect(() => {
+        // Check if use is auth
+    });
 
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
                 {/*Logo*/}
-                <Image
-                    style={STYLES.authLogo}
-                    source={IMAGES.logo}
-                />
+                <Image source={IMAGES.logo} style={STYLES.authLogo}/>
             </View>
             <View style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       name={'email'}
-                       placeholder={'Email'}
                        value={email}
+                       placeholder={'Email'}
                        handleChangeText={(value) => setEmail(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
-                       isPassword={true}
-                       name={'password'}
-                       placeholder={'Password'}
                        value={password}
+                       isPassword={true}
+                       placeholder={'Password'}
                        handleChangeText={(value) => setPassword(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
@@ -44,7 +52,7 @@ const Login = ({navigation}) => {
                 <Button
                     text={'LOGIN'}
                     activeOpacity={0.5}
-                    handleOnPress={() => navigation.navigate('dashboard')}
+                    handleOnPress={() => handleLogin()}
                     style={[STYLES.authSubmitButton, STYLES.middle]}
                     textStyle={STYLES.authWhiteText}
                 />
@@ -72,5 +80,9 @@ const Login = ({navigation}) => {
 };
 
 const { width } = Dimensions.get("screen");
+
+Login.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default Login

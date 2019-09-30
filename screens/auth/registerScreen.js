@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { useState } from 'react'
 import { View, Dimensions, KeyboardAvoidingView, StyleSheet } from 'react-native'
 
@@ -21,42 +22,35 @@ const Register = ({navigation}) => {
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 1.8}}>
                 {/*Logo*/}
-                <Image
-                    style={STYLES.authLogo}
-                    source={IMAGES.logo}
-                />
+                <Image style={STYLES.authLogo} source={IMAGES.logo}/>
             </View>
             <View style={{flex: 3}}>
                 {/*First name input*/}
                 <Input icon={'user'}
-                       name={'firstName'}
-                       placeholder={'First name'}
                        value={firstName}
+                       placeholder={'First name'}
                        handleChangeText={(value) => setFirstName(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
                 {/*Last name input*/}
                 <Input icon={'user'}
-                       name={'lastName'}
-                       placeholder={'Last name'}
                        value={lastName}
+                       placeholder={'Last name'}
                        handleChangeText={(value) => setLastName(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       name={'email'}
-                       placeholder={'Email'}
                        value={email}
+                       placeholder={'Email'}
                        handleChangeText={(value) => setEmail(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
-                       isPassword={true}
-                       name={'password'}
-                       placeholder={'Password'}
                        value={password}
+                       isPassword={true}
+                       placeholder={'Password'}
                        handleChangeText={(value) => setPassword(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                 />
@@ -109,5 +103,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     }
 });
+
+Register.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default Register

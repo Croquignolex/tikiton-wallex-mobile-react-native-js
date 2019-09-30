@@ -1,5 +1,5 @@
 import Legal from '../screens/legal'
-import Login from '../screens/auth/loginScreen'
+import Login from '../containers/loginContainer'
 import Dashboard from '../screens/dashboardScreen'
 import Register from '../screens/auth/registerScreen'
 import Password from '../screens/auth/passwordScreen'

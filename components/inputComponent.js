@@ -29,7 +29,7 @@ const CustomInput = ({icon,
                                secureTextEntry={isPassword}
                                placeholderTextColor={COLORS.muted}
                                underlineColorAndroid="transparent"
-                               onChangeText={(val) => handleChangeText(val, props.name)}
+                               onChangeText={(val) => handleChangeText(val)}
                     />
                 </View>
             </View>
@@ -65,7 +65,6 @@ CustomInput.propTypes = {
     isPassword: PropTypes.bool,
     iconColor: PropTypes.string,
     placeholder: PropTypes.string,
-    name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     handleChangeText: PropTypes.func.isRequired,
     areaStyle: PropTypes.oneOfType([
