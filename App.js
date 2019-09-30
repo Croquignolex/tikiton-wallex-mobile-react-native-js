@@ -1,7 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import AppIntroSlider from 'react-native-app-intro-slider'
-import sliders from './data/sliders'
+
+import reducer from './reducers'
+import SLIDERS from './data/sliders'
+import Navigation from './navigation/navigation'
+
+const store = createStore(reducer);
 
 class App extends React.Component {
     constructor(props) {
@@ -10,41 +16,30 @@ class App extends React.Component {
         this.state = {
             showRealApp: false
         };
-
-        this.handleDone = this.handleDone.bind(this)
     }
 
-    handleDone() {
+    handleDone = () => {
         this.setState({showRealApp: true})
-    }
+    };
 
     render() {
-        if(this.state.showRealApp) {
+        if(this.state.showRealApp || true) {
             return (
-                <View style={styles.container}>
-                    <Text>Open up App.js to start working on your app!</Text>
-                </View>
+                <Provider store={store}>
+                    <Navigation />
+                </Provider>
             );
         } else {
             return (
                 <AppIntroSlider
-                    slides={sliders}
-                    onDone={this.handleDone}
+                    slides={SLIDERS}
                     showSkipButton={true}
+                    onDone={this.handleDone}
                     onSkip={this.handleDone}
                 />
             );
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
 
 export default App
