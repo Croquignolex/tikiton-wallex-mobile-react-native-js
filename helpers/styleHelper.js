@@ -1,7 +1,7 @@
-import COLORS from "./colors";
+import COLORS from "./colorHelper";
 import { StyleSheet, Dimensions } from 'react-native'
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 const STYLES = StyleSheet.create({
     middle: {

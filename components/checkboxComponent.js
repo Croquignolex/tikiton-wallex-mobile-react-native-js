@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 
-import STYLES from "../helpers/styles";
-import COLORS from "../helpers/colors";
+import STYLES from "../helpers/styleHelper";
+import COLORS from "../helpers/colorHelper";
 
 function CustomCheckbox({color, check, handleOnPress, ...props}) {
     const checker = check ? <Icon name='check' size={14} color={color}/> : <Text />;

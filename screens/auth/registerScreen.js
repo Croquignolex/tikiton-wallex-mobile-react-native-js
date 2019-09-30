@@ -1,37 +1,36 @@
 import React from 'react'
-import { View, Dimensions, KeyboardAvoidingView, StyleSheet, Text } from 'react-native'
+import { View, Dimensions, KeyboardAvoidingView, StyleSheet } from 'react-native'
 
-import STYLES from '../../helpers/styles'
-import IMAGES from '../../helpers/images'
+import STYLES from '../../helpers/styleHelper'
+import IMAGES from '../../helpers/imageHelper'
 
-import Input from '../../components/input'
-import Image from '../../components/image'
-import Button from '../../components/button'
-import Checkbox from '../../components/checkbox'
+import Input from '../../components/inputComponent'
+import Image from '../../components/imageComponent'
+import Button from '../../components/buttonComponent'
+import Checkbox from '../../components/checkboxComponent'
+import * as actions from '../../helpers/actionTypes/registerActionType'
 
 class Register extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            email: '',
-            password: '',
-            lastName: '',
-            firstName: '',
-            hasAgree: false
-        }
-    }
-
     handleInput = (value, name) => {
-        this.setState({[name]: value})
+        //this.setState({[name]: value})
     };
 
     handleAgree = () => {
-        this.setState(state => {
+        const molade = {type: actions.TOGGLE_AGREE};
+        this.props.dispatch(molade);
+        /*this.setState(state => {
             state.hasAgree = !state.hasAgree;
             return state;
-        })
+        })*/
     };
+
+    componentDidMount(){
+        console.log(this.props)
+    }
+
+    componentDidUpdate() {
+        console.log(this.props)
+    }
 
     handleLogin = () => {
         this.props.navigation.navigate('login');
@@ -60,7 +59,7 @@ class Register extends React.Component {
                     <Input icon={'user'}
                            name={'firstName'}
                            placeholder={'First name'}
-                           value={this.state.firstName}
+                           value={null}
                            handleChangeText={this.handleInput}
                            areaStyle={{marginBottom: 15, width: width * 0.8}}
                     />
@@ -68,7 +67,7 @@ class Register extends React.Component {
                     <Input icon={'user'}
                            name={'lastName'}
                            placeholder={'Last name'}
-                           value={this.state.lastName}
+                           value={null}
                            handleChangeText={this.handleInput}
                            areaStyle={{marginBottom: 15, width: width * 0.8}}
                     />
@@ -76,7 +75,7 @@ class Register extends React.Component {
                     <Input icon={'at'}
                            name={'email'}
                            placeholder={'Email'}
-                           value={this.state.email}
+                           value={null}
                            handleChangeText={this.handleInput}
                            areaStyle={{marginBottom: 15, width: width * 0.8}}
                     />
@@ -85,7 +84,7 @@ class Register extends React.Component {
                            isPassword={true}
                            name={'password'}
                            placeholder={'Password'}
-                           value={this.state.password}
+                           value={null}
                            handleChangeText={this.handleInput}
                            areaStyle={{marginBottom: 15, width: width * 0.8}}
                     />
@@ -94,7 +93,7 @@ class Register extends React.Component {
                         <Checkbox
                             activeOpacity={0.5}
                             style={styles.checkbox}
-                            check={this.state.hasAgree}
+                            check={null}
                             textStyle={STYLES.authWhiteText}
                             handleOnPress={this.handleAgree}
                         />

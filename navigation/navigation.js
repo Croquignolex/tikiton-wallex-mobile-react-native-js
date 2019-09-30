@@ -1,8 +1,8 @@
 import Legal from '../screens/legal'
-import Login from '../screens/auth/login'
-import Dashboard from '../screens/dashboard'
-import Register from '../screens/auth/register'
-import Password from '../screens/auth/password'
+import Login from '../screens/auth/loginScreen'
+import Dashboard from '../screens/dashboardScreen'
+import Register from '../screens/auth/registerScreen'
+import Password from '../screens/auth/passwordScreen'
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';

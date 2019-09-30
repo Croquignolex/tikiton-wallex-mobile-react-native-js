@@ -1,6 +1,6 @@
 import React from 'react'
-import COLORS from '../helpers/colors'
-import STYLES from '../helpers/styles'
+import COLORS from '../helpers/colorHelper'
+import STYLES from '../helpers/styleHelper'
 import {SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
 class Dashboard extends React.Component {

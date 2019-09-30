@@ -1,20 +1,19 @@
 import React from 'react'
 import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
 
-import STYLES from '../../helpers/styles'
-import IMAGES from '../../helpers/images'
+import STYLES from '../../helpers/styleHelper'
+import IMAGES from '../../helpers/imageHelper'
 
-import Input from '../../components/input'
-import Image from '../../components/image'
-import Button from '../../components/button'
+import Input from '../../components/inputComponent'
+import Image from '../../components/imageComponent'
+import Button from '../../components/buttonComponent'
 
-class Login extends React.Component {
+class Password extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
-            password: '',
+            password: ''
         }
     }
 
@@ -22,16 +21,12 @@ class Login extends React.Component {
         this.setState({[name]: value})
     };
 
-    handleLogin = () => {
+    handleRecover = () => {
         this.props.navigation.navigate('dashboard');
     };
 
     handleRegister = () => {
         this.props.navigation.navigate('register');
-    };
-
-    handleForgottenPassword = () => {
-        this.props.navigation.navigate('password');
     };
 
     render() {
@@ -53,20 +48,11 @@ class Login extends React.Component {
                            handleChangeText={this.handleInput}
                            areaStyle={{marginBottom: 15, width: width * 0.8}}
                     />
-                    {/*Password input*/}
-                    <Input icon={'lock'}
-                           isPassword={true}
-                           name={'password'}
-                           placeholder={'Password'}
-                           value={this.state.password}
-                           handleChangeText={this.handleInput}
-                           areaStyle={{marginBottom: 15, width: width * 0.8}}
-                    />
                     {/*Login button*/}
                     <Button
-                        text={'LOGIN'}
+                        text={'RECOVER'}
                         activeOpacity={0.5}
-                        handleOnPress={this.handleLogin}
+                        handleOnPress={this.handleRecover}
                         style={[STYLES.authSubmitButton, STYLES.middle]}
                         textStyle={STYLES.authWhiteText}
                     />
@@ -78,15 +64,7 @@ class Login extends React.Component {
                         textStyle={STYLES.authWhiteText}
                         text={'I do not have an account'}
                         handleOnPress={this.handleRegister}
-                        style={[ STYLES.authLink, STYLES.middle]}
-                    />
-                    {/*Forgotten password link*/}
-                    <Button
-                        activeOpacity={0.7}
-                        textStyle={STYLES.authWhiteText}
-                        text={'I have forgot my password'}
-                        handleOnPress={this.handleForgottenPassword}
-                        style={[{marginTop: 10}, STYLES.authLink, STYLES.middle]}
+                        style={[STYLES.authLink, STYLES.middle]}
                     />
                 </View>
             </KeyboardAvoidingView>
@@ -96,4 +74,4 @@ class Login extends React.Component {
 
 const { width } = Dimensions.get("screen");
 
-export default Login
+export default Password

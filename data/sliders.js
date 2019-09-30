@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
-import COLORS from '../helpers/colors'
-import IMAGES from '../helpers/images'
+import COLORS from '../helpers/colorHelper'
+import IMAGES from '../helpers/imageHelper'
 
 const styles = StyleSheet.create({
     title: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const sliders = [
+const SLIDERS = [
     {
         key: 'secure',
         title: 'Secure',
@@ -66,4 +66,4 @@ const sliders = [
     },
 ];
 
-export default sliders
+export default SLIDERS

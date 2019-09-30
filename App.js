@@ -1,8 +1,13 @@
 import React from 'react'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
-import sliders from './data/sliders'
+import reducer from './reducers'
+import SLIDERS from './data/sliders'
 import Navigation from './navigation/navigation'
+
+const store = createStore(reducer);
 
 class App extends React.Component {
     constructor(props) {
@@ -18,14 +23,16 @@ class App extends React.Component {
     };
 
     render() {
-        if(this.state.showRealApp) {
+        if(this.state.showRealApp || true) {
             return (
-                <Navigation />
+                <Provider store={store}>
+                    <Navigation />
+                </Provider>
             );
         } else {
             return (
                 <AppIntroSlider
-                    slides={sliders}
+                    slides={SLIDERS}
                     showSkipButton={true}
                     onDone={this.handleDone}
                     onSkip={this.handleDone}

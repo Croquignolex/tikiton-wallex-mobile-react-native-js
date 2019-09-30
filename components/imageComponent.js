@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from "prop-types";
 import { View, Image, StyleSheet } from 'react-native'
 
-import COLORS from "../helpers/colors";
-import STYLES from "../helpers/styles";
+import COLORS from "../helpers/colorHelper";
+import STYLES from "../helpers/styleHelper";
 
 //TODO: improve image loading animation
 function CustomImage({areaStyle, ...props}) {

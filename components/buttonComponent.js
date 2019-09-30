@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { View, TouchableOpacity, Text } from 'react-native'
 
-import STYLES from "../helpers/styles";
+import STYLES from "../helpers/styleHelper";
 
 function CustomButton({textStyle, icon, iconColor, iconStyle, text, handleOnPress, ...props}) {
     const buttonIcon = icon === '' ? <Text /> : (<Icon size={14}
