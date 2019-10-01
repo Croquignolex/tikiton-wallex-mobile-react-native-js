@@ -18,12 +18,13 @@ const Login = ({navigation, ...props}) => {
 
     const handleLogin = () => {
         //TODO: API call
-        // props.actions.auth()
         props.dispatch({type: AUTH})
+
     };
 
     useEffect(() => {
         // Check if use is auth
+        console.log(props)
     });
 
     return (

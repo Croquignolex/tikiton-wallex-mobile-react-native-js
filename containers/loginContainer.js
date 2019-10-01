@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
-//import { bindActionCreators } from 'redux'
-
-//import * as actions from '../actions/authAction'
 import LoginScreen from '../screens/auth/loginScreen'
 
-/*const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(actions, dispatch)
-});*/
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
 
+// Map state function to component props
 const mapStateToProps = (state) => ({
     user: state.user
 });
 
-const login = connect(mapStateToProps)(LoginScreen);
+// Connect React to Redux
+const login = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 export default login
