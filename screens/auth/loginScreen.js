@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from 'react'
-import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
+import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
@@ -9,7 +9,7 @@ import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 
-import { AUTH } from '../../helpers/actionTypes/authActionType'
+import { emitAuth } from '../../actions/authAction'
 
 const Login = ({navigation, ...props}) => {
 
@@ -17,14 +17,23 @@ const Login = ({navigation, ...props}) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        //TODO: API call
-        props.dispatch({type: AUTH})
-
+        props.dispatch(emitAuth(email, password))
     };
 
     useEffect(() => {
-        // Check if use is auth
-        console.log(props)
+        //TODO: Dynamic load screen name by adding in helper
+        if(props.user.auth) {
+            Alert.alert(
+                'Information',
+                'You ara now login',
+                [
+                    {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: true }
+            )
+        }
     });
 
     return (

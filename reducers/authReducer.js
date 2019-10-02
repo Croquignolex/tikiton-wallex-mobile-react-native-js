@@ -8,18 +8,11 @@ function auth(state = initialState, action) {
     let nextState;
     
     switch (action.type) {
-        // User is auth
+        // Set user auth
         case types.AUTH:
             nextState = {
                 ...state,
-                auth: true
-            };
-            return nextState || state;
-        // User is guest
-        case types.GUEST:
-            nextState = {
-                ...state,
-                auth: false
+                auth: action.flag
             };
             return nextState || state;
         // Unknown action

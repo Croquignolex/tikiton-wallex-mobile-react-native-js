@@ -1,10 +1,10 @@
 import React from 'react'
-import PropTypes from "prop-types";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { SafeAreaView, View, TextInput, StyleSheet, Text } from 'react-native'
+import PropTypes from "prop-types"
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { SafeAreaView, View, TextInput, StyleSheet } from 'react-native'
 
-import COLORS from "../helpers/colorHelper";
-import STYLES from "../helpers/styleHelper";
+import COLORS from "../helpers/colorHelper"
+import STYLES from "../helpers/styleHelper"
 
 const CustomInput = ({icon,
                       areaStyle,
@@ -14,11 +14,8 @@ const CustomInput = ({icon,
                       handleChangeText,
                       ...props}) => {
 
-    const inputIcon = icon === '' ? <Text /> : <Icon size={14}
-                                                      name={icon}
-                                                      color={iconColor}
-                                                      style={iconStyle}
-                                                />;
+    const inputIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
+
     return (
         <SafeAreaView style={areaStyle}>
             <View style={styles.mainContainer}>
