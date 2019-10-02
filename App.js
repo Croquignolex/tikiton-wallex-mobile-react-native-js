@@ -1,45 +1,31 @@
-import React from 'react'
-import { createStore } from 'redux'
+import Store from './Store'
 import { Provider } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
-import reducer from './reducers'
 import SLIDERS from './data/sliders'
-import Navigation from './navigation/navigation'
+import rootNavigation from './navigation/rootNavigation'
 
-const store = createStore(reducer);
+const App = () => {
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+    const [showRealApp, setShowRealApp] = useState(false);
+    const Navigation = createAppContainer(rootNavigation(true));
 
-        this.state = {
-            showRealApp: false
-        };
-    }
+    const render = showRealApp || true
+        ? <Provider store={Store}><Navigation /></Provider>
+        : <AppIntroSlider slides={SLIDERS}
+                          showSkipButton={true}
+                          onDone={() => setShowRealApp(true)}
+                          onSkip={() => setShowRealApp(true)}
+          />;
 
-    handleDone = () => {
-        this.setState({showRealApp: true})
-    };
+    useEffect(() => {
+        // TODO: Check if user has already view the intro sliders (normal)
+        // TODO: Check if user is auth and render the correct component (redux)
+    });
 
-    render() {
-        if(this.state.showRealApp || true) {
-            return (
-                <Provider store={store}>
-                    <Navigation />
-                </Provider>
-            );
-        } else {
-            return (
-                <AppIntroSlider
-                    slides={SLIDERS}
-                    showSkipButton={true}
-                    onDone={this.handleDone}
-                    onSkip={this.handleDone}
-                />
-            );
-        }
-    }
-}
+    return (render)
+};
 
 export default App

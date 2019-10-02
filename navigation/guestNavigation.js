@@ -1,13 +1,11 @@
 import Legal from '../screens/legal'
-import Login from '../screens/auth/loginScreen'
-import Dashboard from '../screens/dashboardScreen'
+import Login from '../containers/loginContainer'
 import Register from '../screens/auth/registerScreen'
 import Password from '../screens/auth/passwordScreen'
 
-import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-const SignStackNavigator = createStackNavigator({
+const GuestStackNavigator = createStackNavigator({
     login: {
         screen: Login,
         navigationOptions: {
@@ -26,12 +24,6 @@ const SignStackNavigator = createStackNavigator({
             header: null
         }
     },
-    dashboard: {
-        screen: Dashboard,
-        navigationOptions: {
-            header: null
-        }
-    },
     legal: {
         screen: Legal,
         navigationOptions: {
@@ -40,6 +32,6 @@ const SignStackNavigator = createStackNavigator({
     },
 });
 
-export default createAppContainer(SignStackNavigator)
+export default GuestStackNavigator
 
 

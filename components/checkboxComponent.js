@@ -1,13 +1,13 @@
 import React from 'react'
-import PropTypes from "prop-types";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import PropTypes from "prop-types"
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 
-import STYLES from "../helpers/styleHelper";
-import COLORS from "../helpers/colorHelper";
+import STYLES from "../helpers/styleHelper"
+import COLORS from "../helpers/colorHelper"
 
-function CustomCheckbox({color, check, handleOnPress, ...props}) {
-    const checker = check ? <Icon name='check' size={14} color={color}/> : <Text />;
+const CustomCheckbox = ({color, check, handleOnPress, ...props}) => {
+    const checker = !check && <Icon name='check' size={14} color={color}/>;
 
     return (
         <TouchableOpacity
@@ -19,17 +19,6 @@ function CustomCheckbox({color, check, handleOnPress, ...props}) {
             </View>
         </TouchableOpacity>
     )
-}
-
-CustomCheckbox.propTypes = {
-    ...TouchableOpacity.propTypes,
-    color: PropTypes.string,
-    check: PropTypes.bool.isRequired,
-    handleOnPress: PropTypes.func.isRequired
-};
-
-CustomCheckbox.defaultProps = {
-    color: COLORS.white
 };
 
 const styles = StyleSheet.create({
@@ -41,5 +30,16 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
 });
+
+CustomCheckbox.propTypes = {
+    ...TouchableOpacity.propTypes,
+    color: PropTypes.string,
+    check: PropTypes.bool.isRequired,
+    handleOnPress: PropTypes.func.isRequired
+};
+
+CustomCheckbox.defaultProps = {
+    color: COLORS.white
+};
 
 export default CustomCheckbox
