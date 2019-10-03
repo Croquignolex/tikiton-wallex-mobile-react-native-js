@@ -1,31 +1,11 @@
-import Store from './Store'
+import React from 'react'
 import { Provider } from 'react-redux'
-import React, { useState, useEffect } from 'react'
-import { createAppContainer } from 'react-navigation';
-import AppIntroSlider from 'react-native-app-intro-slider'
 
-import SLIDERS from './data/sliders'
-import rootNavigation from './navigation/rootNavigation'
+import Store from "./Store";
+import Root from './containers/rootContainer'
 
 const App = () => {
-
-    const [showRealApp, setShowRealApp] = useState(false);
-    const Navigation = createAppContainer(rootNavigation(true));
-
-    const render = showRealApp || true
-        ? <Provider store={Store}><Navigation /></Provider>
-        : <AppIntroSlider slides={SLIDERS}
-                          showSkipButton={true}
-                          onDone={() => setShowRealApp(true)}
-                          onSkip={() => setShowRealApp(true)}
-          />;
-
-    useEffect(() => {
-        // TODO: Check if user has already view the intro sliders (normal)
-        // TODO: Check if user is auth and render the correct component (redux)
-    });
-
-    return (render)
+    return(<Provider store={Store}><Root /></Provider>);
 };
 
 export default App

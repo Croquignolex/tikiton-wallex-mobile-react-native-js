@@ -1,18 +1,18 @@
-import * as types from '../helpers/actionTypes/authActionType'
+import * as types from '../helpers/actionTypes/appActionType'
 
 const initialState = {
-    auth: false
+    shouldSlide: true
 };
 
-function auth(state = initialState, action) {
+function app(state = initialState, action) {
     let nextState;
     
     switch (action.type) {
         // Set user auth
-        case types.AUTH:
+        case types.INTRO_SLIDER:
             nextState = {
                 ...state,
-                auth: action.flag
+                shouldSlide: action.flag
             };
             return nextState || state;
         // Unknown action
@@ -21,4 +21,4 @@ function auth(state = initialState, action) {
     }
 }
 
-export default auth
+export default app
