@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
-import PropTypes from 'prop-types';
 import SLIDERS from '../data/sliders'
 import { INTRO_SLIDES } from '../helpers/constantHelpers'
-import rootNavigation from '../navigation/rootNavigation'
+import rootNavigation from '../navigations/rootNavigation'
 import { getStorageItem, setStorageItem } from '../helpers/functionHelpers'
 
 const Root = ({ user }) => {
