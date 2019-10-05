@@ -1,4 +1,4 @@
-import { INIT_AUTH } from '../actions/authAction.js'
+import { AUTH } from "../actions/authAction";
 
 const initialState = {
     email: '',
@@ -18,8 +18,8 @@ function user(state = initialState, action) {
     let nextState;
     
     switch (action.type) {
-        // Set user auth
-        case INIT_AUTH:
+        // Auth
+        case AUTH:
             nextState = {
                 ...state,
                 auth: action.flag

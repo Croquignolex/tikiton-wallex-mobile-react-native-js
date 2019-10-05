@@ -1,16 +1,16 @@
 import { getStorageItem } from '../helpers/functionHelpers'
 
 // Action types
-export const INIT_AUTH = 'INIT_AUTH';
+export const AUTH = 'AUTH';
 
 /**
  *
  * @param flag
  * @returns {{flag: *, type: *}}
  */
-export const initAuth = (flag) => ({
+export const auth = (flag) => ({
     flag,
-    type: INIT_AUTH
+    type: AUTH
 });
 
 /**
@@ -22,9 +22,19 @@ export const emitInitAuth = () => {
         getStorageItem('userAuth').then(
             (data) => {
                 data = JSON.parse(data);
-                if(data !== null) dispatch(initAuth(data));
-                else dispatch(initAuth(false));
+                if(data !== null) dispatch(auth(data));
+                else dispatch(auth(false));
             }
         ).catch((error) => console.log(`Something when wrong ${error}`));
+    }
+};
+
+/**
+ *
+ * @returns {Function}
+ */
+export const emitAuth = (flag) => {
+    return (dispatch) => {
+        dispatch(auth(flag));
     }
 };

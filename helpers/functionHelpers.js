@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native'
-import { EMAIL } from "./constantHelpers";
 
 export const setStorageItem = async (key, value) => {
     return await AsyncStorage.setItem(key, JSON.stringify(value))

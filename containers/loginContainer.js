@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    validation: state.validation
+    user: state.user
 });
 
 // Connect React to Redux

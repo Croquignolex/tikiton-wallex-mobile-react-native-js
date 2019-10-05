@@ -1,4 +1,2 @@
-export const TEXT = 'text';
-export const EMAIL = 'email';
-export const NUMBER = 'number';
-export const PASSWORD = 'password';
+export const USER_AUTH = 'userAuth';
+export const INTRO_SLIDES = 'introSlides';

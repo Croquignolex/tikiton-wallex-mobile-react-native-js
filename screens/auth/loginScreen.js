@@ -1,37 +1,57 @@
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from 'react'
-import { emailChecker, passwordChecker } from '../../helpers/functionHelpers'
+import React, { useState } from 'react'
+import STYLES from '../../helpers/styleHelper'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
-import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
-
 import Input from '../../components/inputComponent'
+
+import { emitAuth } from '../../actions/authAction'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { emitLoginValidation } from '../../actions/formValidationAction'
+import { USER_AUTH } from "../../helpers/constantHelpers";
+import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionHelpers'
 
-const Login = ({navigation, dispatch, validation}) => {
-    const [email, setEmail] = useState(validation.email);
-    const [password, setPassword] = useState(validation.password);
+const Login = ({navigation, dispatch}) => {
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
+    const [email, setEmail] = useState({isValid: true, message: '', val: ''});
+    const [password, setPassword] = useState({isValid: true, message: '', val: ''});
 
+    // Login process
     const handleLogin = () => {
-        setEmail(emailChecker(email));
-        setPassword(passwordChecker(password));
+        const _email = emailChecker(email);
+        const _password = passwordChecker(password);
+        // Set value
+        setEmail(_email);
+        setPassword(_password);
 
-        if(email.isValid && password.isValid) {
-            dispatch(emitLoginValidation(email.val, password.val));
+        // TODO: make some tips for error type render
+        if(_email.isValid && _password.isValid) {
+            // Login and save user data in storage and store
+            // TODO: Api user check
+            const apiResponse = false;
+            if(apiResponse) {
+                // Save user auth in storage
+                setStorageItem(USER_AUTH, true).then(
+                    () => {
+                        dispatch(emitAuth(true));
+                    }
+                ).catch((error) => console.log(`Something when wrong ${error}`));
+            } else setInvalidCredentials(true)
         }
     };
 
-    if(validation.globalFailMessage.length > 0) {
+    // Alert for wrong credentials
+    if(invalidCredentials) {
         Alert.alert(
-            'Information', validation.globalFailMessage,
-            [{text: 'OK'}],
+            'Information',
+            'Email and password does not match',
+            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
             {cancelable: false}
         );
     }
 
+    // Render component
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
@@ -51,8 +71,8 @@ const Login = ({navigation, dispatch, validation}) => {
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
-                       value={password.val}
                        isPassword={true}
+                       value={password.val}
                        placeholder={'Password'}
                        isValid={password.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
@@ -65,8 +85,8 @@ const Login = ({navigation, dispatch, validation}) => {
                     text={'LOGIN'}
                     activeOpacity={0.5}
                     textStyle={STYLES.authWhiteText}
-                    style={[STYLES.authSubmitButton, STYLES.middle]}
                     handleOnPress={() => handleLogin()}
+                    style={[STYLES.authSubmitButton, STYLES.middle]}
                 />
             </View>
             <View style={{flex: 1}}>
@@ -91,11 +111,12 @@ const Login = ({navigation, dispatch, validation}) => {
     )
 };
 
+// Fetch screen width
 const { width } = Dimensions.get("screen");
 
+// Proptypes from global store
 Login.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    validation: PropTypes.object.isRequired,
     navigation: PropTypes.object.isRequired,
 };
 

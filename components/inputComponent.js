@@ -15,7 +15,7 @@ const CustomInput = ({icon,
                       handleChangeText,
                       ...props}) => {
 
-    const inputIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
+    const inputIcon = icon && <Icon size={14} name={icon} color={isValid ? COLORS.black : COLORS.red} style={iconStyle}/>;
 
     return (
         <SafeAreaView style={areaStyle}>
@@ -61,7 +61,6 @@ CustomInput.propTypes = {
     icon: PropTypes.string,
     isValid: PropTypes.bool,
     isPassword: PropTypes.bool,
-    iconColor: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     handleChangeText: PropTypes.func.isRequired,
@@ -81,7 +80,6 @@ CustomInput.defaultProps = {
     areaStyle: {},
     placeholder: '',
     isPassword: false,
-    iconColor: COLORS.theme,
     iconStyle: {marginRight: 12}
 };
 
