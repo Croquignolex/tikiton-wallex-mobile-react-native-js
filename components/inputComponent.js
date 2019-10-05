@@ -7,12 +7,15 @@ import COLORS from "../helpers/colorHelper"
 import STYLES from "../helpers/styleHelper"
 
 const CustomInput = ({icon,
+                      isValid,
                       areaStyle,
                       iconColor,
                       iconStyle,
                       isPassword,
                       handleChangeText,
                       ...props}) => {
+
+    console.log(props.value)
 
     const inputIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
 
@@ -22,11 +25,11 @@ const CustomInput = ({icon,
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
                     {inputIcon}
                     <TextInput {...props}
-                               style={styles.inputStyles}
                                secureTextEntry={isPassword}
                                placeholderTextColor={COLORS.muted}
                                underlineColorAndroid="transparent"
                                onChangeText={(val) => handleChangeText(val)}
+                               style={[styles.inputStyles, isValid ? {color: COLORS.black} : {color: COLORS.red}]}
                     />
                 </View>
             </View>
@@ -50,15 +53,15 @@ const styles = StyleSheet.create({
     inputStyles: {
         flex: 1,
         fontSize: 15,
-        color: COLORS.black,
         textDecorationColor: 'transparent',
-        textShadowColor: 'transparent',
+        textShadowColor: 'transparent'
     }
 });
 
 CustomInput.propTypes = {
-    ...TextInput.propTypes,
+    //...TextInput.propTypes,
     icon: PropTypes.string,
+    isValid: PropTypes.bool,
     isPassword: PropTypes.bool,
     iconColor: PropTypes.string,
     placeholder: PropTypes.string,
@@ -76,6 +79,7 @@ CustomInput.propTypes = {
 
 CustomInput.defaultProps = {
     icon: '',
+    isValid: true,
     areaStyle: {},
     placeholder: '',
     isPassword: false,

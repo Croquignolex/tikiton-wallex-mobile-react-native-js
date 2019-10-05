@@ -1,42 +1,78 @@
-import { AsyncStorage } from 'react-native'
-import * as types from '../helpers/actionTypes/authActionType'
+import { getStorageItem } from '../helpers/functions'
 
-export const _auth = (flag) => ({
-    type: types.AUTH,
-    flag
+// Action types
+export const AUTH = 'AUTH';
+export const LOGIN = 'LOGIN';
+export const USER_DATA = 'SET_USER_DATA';
+
+/**
+ *
+ * @param flag
+ * @returns {{flag: *, type: *}}
+ */
+export const auth = (flag) => ({
+    flag,
+    type: AUTH
 });
 
-export const _setUserData = (firstName, lastName, email) => ({
-    type: types.USER_DATA,
-    firstName,
+/**
+ *
+ * @returns {{flag: *, type: *}}
+ * @param email
+ * @param password
+ * @param flag
+ */
+export const login = (email, password, flag) => ({
+    flag,
+    email,
+    password,
+    type: LOGIN
+});
+
+/**
+ *
+ * @param firstName
+ * @param lastName
+ * @param email
+ * @param password
+ * @param flag
+ * @returns {{firstName: *, lastName: *, type: *, email: *}}
+ */
+export const setUserData = (email, password, firstName, lastName, flag) => ({
+    flag,
+    email,
+    password,
     lastName,
-    email
+    firstName,
+    type: USER_DATA
 });
 
-export const emitLogin = (login, password) => {
+/**
+ *
+ * @param _login
+ * @param _password
+ * @returns {Function}
+ */
+export const emitLogin = (_login, _password) => {
     return (dispatch) => {
         //TODO: Check credentials by API call
-        const apiResult = true; // Fake
-        dispatch(_auth(apiResult))
+        const apiResult = false; // Fake
+        dispatch(login(_login, _password, apiResult))
     }
 };
 
-export const emitUserData = () => {
-    return async (dispatch) => {
-        try {
-            const userAuth = await AsyncStorage.getItem('userAuth');
-            if(userAuth !== null) {
-                dispatch(_auth(userAuth === 'true'));
-                if(userAuth === 'true') {
-                    const firstName = await AsyncStorage.getItem('userFirstName');
-                    const lastName = await AsyncStorage.getItem('userLastName');
-                    const email = await AsyncStorage.getItem('userEmail');
-                    dispatch(_setUserData(firstName, lastName, email))
-                }
+/**
+ *
+ * @returns {Function}
+ */
+export const emitAuth = () => {
+    return (dispatch) => {
+        getStorageItem('userAuth').then(
+            (data) => {
+                data = JSON.parse(data);
+                if(data !== null) dispatch(auth(data));
+                else dispatch(auth(false));
             }
-            else dispatch(_auth(false));
-        } catch (e) {
-            dispatch(_auth(false));
-        }
+        ).catch((error) => console.log(`Something when wrong ${error}`));
     }
 };

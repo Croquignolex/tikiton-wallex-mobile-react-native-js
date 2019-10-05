@@ -8,33 +8,17 @@ import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
+import { emitLogin } from '../../actions/authAction'
 
-import { emitAuth } from '../../actions/authAction'
+const Login = ({navigation, dispatch, user}) => {
 
-const Login = ({navigation, ...props}) => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState(user.email);
+    const [isValid, setIsValid] = useState(false);
+    const [password, setPassword] = useState(user.password);
 
     const handleLogin = () => {
-        props.dispatch(emitAuth(email, password))
+        dispatch(emitLogin(email, password));
     };
-
-    useEffect(() => {
-        //TODO: Dynamic load screen name by adding in helper
-        if(props.user.auth) {
-            Alert.alert(
-                'Information',
-                'You ara now login',
-                [
-                    {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: true }
-            )
-        }
-    });
 
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
@@ -46,17 +30,19 @@ const Login = ({navigation, ...props}) => {
                 {/*E-mail input*/}
                 <Input icon={'at'}
                        value={email}
+                       isValid={isValid}
                        placeholder={'Email'}
-                       handleChangeText={(value) => setEmail(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
+                       handleChangeText={(value) => { setEmail(value); setIsValid(true) }}
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
                        value={password}
                        isPassword={true}
+                       isValid={isValid}
                        placeholder={'Password'}
-                       handleChangeText={(value) => setPassword(value)}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
+                       handleChangeText={(value) => { setPassword(value); setIsValid(true) }}
                 />
                 {/*Login button*/}
                 <Button
@@ -92,7 +78,9 @@ const Login = ({navigation, ...props}) => {
 const { width } = Dimensions.get("screen");
 
 Login.propTypes = {
-    navigation: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 export default Login

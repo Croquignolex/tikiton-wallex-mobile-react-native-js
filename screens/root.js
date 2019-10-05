@@ -2,21 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
+import PropTypes from "prop-types";
 import SLIDERS from '../data/sliders'
-import { emitUserData } from '../actions/authAction'
 import rootNavigation from '../navigation/rootNavigation'
 import { getStorageItem, setStorageItem } from '../helpers/functions'
 
-const Root = (props) => {
-    const [shouldRender, setShouldRender] = useState(false);
+const Root = ({ user }) => {
     const [shouldSlide, setShouldSlide] = useState(true);
+    const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
-        // Manage user auth render
-        props.dispatch(emitUserData());
-
+        // Manage intro sliders render
         if(!shouldRender){
-            // Manage intro sliders render
             getStorageItem('introSlides').then(
                 (data) => {
                     data = JSON.parse(data);
@@ -29,6 +26,7 @@ const Root = (props) => {
         }
     }, []);
 
+    // Complete action (sliders)
     const slidersComplete = () => {
         setStorageItem('introSlides', false).then(
             () => {
@@ -37,7 +35,7 @@ const Root = (props) => {
         ).catch((error) => console.log(`Something when wrong ${error}`));
     };
 
-    console.log('render')
+    // Render
     if(shouldRender) {
         if(shouldSlide) {
             return(
@@ -48,12 +46,16 @@ const Root = (props) => {
                 />
             );
         } else {
-            const Navigation = createAppContainer(rootNavigation(props.user.auth));
+            const Navigation = createAppContainer(rootNavigation(user.auth));
             return(<Navigation />);
         }
     } else {
         return null;
     }
+};
+
+Root.propTypes = {
+    user: PropTypes.object.isRequired
 };
 
 export default Root

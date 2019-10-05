@@ -1,6 +1,7 @@
 const COLORS = {
     // Primary colors
     white: '#FFF',
+    red: '#db3236',
     black: '#000',
     lightWhite: '#F4F5F7',
     theme: '#FF3D00',
