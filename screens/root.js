@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import SLIDERS from '../data/sliders'
+import { INTRO_SLIDES } from '../helpers/constantHelpers'
 import rootNavigation from '../navigation/rootNavigation'
 import { getStorageItem, setStorageItem } from '../helpers/functionHelpers'
 
@@ -14,7 +15,7 @@ const Root = ({ user }) => {
     useEffect(() => {
         // Manage intro sliders render
         if(!shouldRender){
-            getStorageItem('introSlides').then(
+            getStorageItem(INTRO_SLIDES).then(
                 (data) => {
                     data = JSON.parse(data);
                     if(data !== null) setShouldSlide(data);
@@ -28,7 +29,7 @@ const Root = ({ user }) => {
 
     // Complete action (sliders)
     const slidersComplete = () => {
-        setStorageItem('introSlides', false).then(
+        setStorageItem(INTRO_SLIDES, false).then(
             () => {
                 setShouldSlide(false);
             }

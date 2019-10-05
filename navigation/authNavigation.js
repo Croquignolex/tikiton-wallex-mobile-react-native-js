@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 import COLORS from "../helpers/colorHelper"
-import Dashboard from '../screens/dashboardScreen'
-import Settings from '../screens/settingsScreen'
+import Dashboard from '../screens/app/dashboardScreen'
+import Settings from '../screens/app/settingsScreen'
 
 const AuthTabsNavigator = createBottomTabNavigator(
     {

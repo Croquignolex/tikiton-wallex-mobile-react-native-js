@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from 'react'
-import { View, Dimensions, KeyboardAvoidingView } from 'react-native'
+import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
@@ -8,11 +8,45 @@ import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
+import { emailChecker } from "../../helpers/functionHelpers";
 
 const Password = ({navigation}) => {
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
+    const [email, setEmail] = useState({isValid: true, message: '', val: ''});
 
-    const [password, setPassword] = useState('');
+    // Recover password process
+    const handleRecover = () => {
+        const _email = emailChecker(email);
+        // Set value
+        setEmail(_email);
 
+        // TODO: make some tips for error type render
+        if(_email.isValid) {
+            // TODO: Api send reset link
+            const apiResponse = false;
+            if(apiResponse) {
+                // Display information
+                Alert.alert(
+                    'Information',
+                    'A password reset has been send, check your ail please',
+                    [{text: 'OK'}],
+                    {cancelable: false}
+                );
+            } else setInvalidCredentials(true)
+        }
+    };
+
+    // Alert for wrong credentials
+    if(invalidCredentials) {
+        Alert.alert(
+            'Information',
+            'Email not found. We recommend you to create an account',
+            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
+            {cancelable: false}
+        );
+    }
+
+    // Render component
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
@@ -22,10 +56,13 @@ const Password = ({navigation}) => {
             <View style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       value={password}
+                       value={email.val}
                        placeholder={'Email'}
-                       handleChangeText={(value) => setPassword(value)}
+                       isValid={email.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
+                       handleChangeText={(val) => {
+                           setEmail({...email, isValid: true, val});
+                       }}
                 />
                 {/*Login button*/}
                 <Button
@@ -33,7 +70,7 @@ const Password = ({navigation}) => {
                     activeOpacity={0.5}
                     textStyle={STYLES.authWhiteText}
                     style={[STYLES.authSubmitButton, STYLES.middle]}
-                    handleOnPress={() => navigation.navigate('dashboard')}
+                    handleOnPress={() => handleRecover()}
                 />
             </View>
             <View style={{flex: 1}}>
@@ -50,10 +87,12 @@ const Password = ({navigation}) => {
     )
 };
 
+// Fetch screen width
 const { width } = Dimensions.get("screen");
 
+// Proptypes from global store
 Password.propTypes = {
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
 };
 
 export default Password
