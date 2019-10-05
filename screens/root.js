@@ -1,32 +1,58 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
 import SLIDERS from '../data/sliders'
 import { emitUserData } from '../actions/authAction'
 import rootNavigation from '../navigation/rootNavigation'
-import { emitCheckIntroSlider, emitHasSeenIntroSlider } from '../actions/appAction'
+import { getStorageItem, setStorageItem } from '../helpers/functions'
 
 const Root = (props) => {
-    useEffect(() => {
-        // Manage intro sliders render
-        props.dispatch(emitCheckIntroSlider());
+    const [shouldRender, setShouldRender] = useState(false);
+    const [shouldSlide, setShouldSlide] = useState(true);
 
+    useEffect(() => {
         // Manage user auth render
         props.dispatch(emitUserData());
+
+        if(!shouldRender){
+            // Manage intro sliders render
+            getStorageItem('introSlides').then(
+                (data) => {
+                    data = JSON.parse(data);
+                    if(data !== null) setShouldSlide(data);
+                    else setShouldSlide(true);
+
+                    setShouldRender(true);
+                }
+            ).catch((error) => console.log(`Something when wrong ${error}`));
+        }
     }, []);
 
-    if(props.app.shouldSlide) {
-        return(
-            <AppIntroSlider slides={SLIDERS}
-                showSkipButton={true}
-                onDone={() => props.dispatch(emitHasSeenIntroSlider())}
-                onSkip={() => props.dispatch(emitHasSeenIntroSlider())}
-            />
-        );
+    const slidersComplete = () => {
+        setStorageItem('introSlides', false).then(
+            () => {
+                setShouldSlide(false);
+            }
+        ).catch((error) => console.log(`Something when wrong ${error}`));
+    };
+
+    console.log('render')
+    if(shouldRender) {
+        if(shouldSlide) {
+            return(
+                <AppIntroSlider slides={SLIDERS}
+                    showSkipButton={true}
+                    onDone={() => slidersComplete()}
+                    onSkip={() => slidersComplete()}
+                />
+            );
+        } else {
+            const Navigation = createAppContainer(rootNavigation(props.user.auth));
+            return(<Navigation />);
+        }
     } else {
-        const Navigation = createAppContainer(rootNavigation(props.user.auth));
-        return(<Navigation />);
+        return null;
     }
 };
 
