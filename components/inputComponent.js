@@ -15,8 +15,6 @@ const CustomInput = ({icon,
                       handleChangeText,
                       ...props}) => {
 
-    console.log(props.value)
-
     const inputIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
 
     return (

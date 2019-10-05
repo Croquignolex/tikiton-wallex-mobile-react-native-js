@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from 'react'
+import { emailChecker, passwordChecker } from '../../helpers/functionHelpers'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
@@ -8,17 +9,28 @@ import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { emitLogin } from '../../actions/authAction'
+import { emitLoginValidation } from '../../actions/formValidationAction'
 
-const Login = ({navigation, dispatch, user}) => {
-
-    const [email, setEmail] = useState(user.email);
-    const [isValid, setIsValid] = useState(false);
-    const [password, setPassword] = useState(user.password);
+const Login = ({navigation, dispatch, validation}) => {
+    const [email, setEmail] = useState(validation.email);
+    const [password, setPassword] = useState(validation.password);
 
     const handleLogin = () => {
-        dispatch(emitLogin(email, password));
+        setEmail(emailChecker(email));
+        setPassword(passwordChecker(password));
+
+        if(email.isValid && password.isValid) {
+            dispatch(emitLoginValidation(email.val, password.val));
+        }
     };
+
+    if(validation.globalFailMessage.length > 0) {
+        Alert.alert(
+            'Information', validation.globalFailMessage,
+            [{text: 'OK'}],
+            {cancelable: false}
+        );
+    }
 
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
@@ -29,28 +41,32 @@ const Login = ({navigation, dispatch, user}) => {
             <View style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       value={email}
-                       isValid={isValid}
+                       value={email.val}
                        placeholder={'Email'}
+                       isValid={email.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
-                       handleChangeText={(value) => { setEmail(value); setIsValid(true) }}
+                       handleChangeText={(val) => {
+                           setEmail({...email, isValid: true, val});
+                       }}
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
-                       value={password}
+                       value={password.val}
                        isPassword={true}
-                       isValid={isValid}
                        placeholder={'Password'}
+                       isValid={password.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
-                       handleChangeText={(value) => { setPassword(value); setIsValid(true) }}
+                       handleChangeText={(val) => {
+                           setPassword({...password, isValid: true, val});
+                       }}
                 />
                 {/*Login button*/}
                 <Button
                     text={'LOGIN'}
                     activeOpacity={0.5}
-                    handleOnPress={() => handleLogin()}
-                    style={[STYLES.authSubmitButton, STYLES.middle]}
                     textStyle={STYLES.authWhiteText}
+                    style={[STYLES.authSubmitButton, STYLES.middle]}
+                    handleOnPress={() => handleLogin()}
                 />
             </View>
             <View style={{flex: 1}}>
@@ -59,8 +75,8 @@ const Login = ({navigation, dispatch, user}) => {
                     activeOpacity={0.7}
                     textStyle={STYLES.authWhiteText}
                     text={'I do not have an account'}
-                    handleOnPress={() => navigation.navigate('register')}
                     style={[ STYLES.authLink, STYLES.middle]}
+                    handleOnPress={() => navigation.navigate('register')}
                 />
                 {/*Forgotten password link*/}
                 <Button
@@ -78,8 +94,8 @@ const Login = ({navigation, dispatch, user}) => {
 const { width } = Dimensions.get("screen");
 
 Login.propTypes = {
-    user: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
+    validation: PropTypes.object.isRequired,
     navigation: PropTypes.object.isRequired,
 };
 

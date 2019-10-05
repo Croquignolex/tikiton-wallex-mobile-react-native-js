@@ -5,7 +5,7 @@ import AppIntroSlider from 'react-native-app-intro-slider'
 import PropTypes from "prop-types";
 import SLIDERS from '../data/sliders'
 import rootNavigation from '../navigation/rootNavigation'
-import { getStorageItem, setStorageItem } from '../helpers/functions'
+import { getStorageItem, setStorageItem } from '../helpers/functionHelpers'
 
 const Root = ({ user }) => {
     const [shouldSlide, setShouldSlide] = useState(true);
