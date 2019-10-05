@@ -1,9 +1,9 @@
 import React from 'react'
-import COLORS from '../helpers/colorHelper'
-import STYLES from '../helpers/styleHelper'
+import COLORS from '../../helpers/colorHelper'
+import STYLES from '../../helpers/styleHelper'
 import {SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
-class Dashboard extends React.Component {
+class Settings extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Dashboard
+export default Settings

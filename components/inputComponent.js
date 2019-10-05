@@ -7,6 +7,7 @@ import COLORS from "../helpers/colorHelper"
 import STYLES from "../helpers/styleHelper"
 
 const CustomInput = ({icon,
+                      isValid,
                       areaStyle,
                       iconColor,
                       iconStyle,
@@ -14,7 +15,7 @@ const CustomInput = ({icon,
                       handleChangeText,
                       ...props}) => {
 
-    const inputIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
+    const inputIcon = icon && <Icon size={14} name={icon} color={isValid ? COLORS.black : COLORS.red} style={iconStyle}/>;
 
     return (
         <SafeAreaView style={areaStyle}>
@@ -22,11 +23,11 @@ const CustomInput = ({icon,
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
                     {inputIcon}
                     <TextInput {...props}
-                               style={styles.inputStyles}
                                secureTextEntry={isPassword}
                                placeholderTextColor={COLORS.muted}
                                underlineColorAndroid="transparent"
                                onChangeText={(val) => handleChangeText(val)}
+                               style={[styles.inputStyles, isValid ? {color: COLORS.black} : {color: COLORS.red}]}
                     />
                 </View>
             </View>
@@ -50,17 +51,16 @@ const styles = StyleSheet.create({
     inputStyles: {
         flex: 1,
         fontSize: 15,
-        color: COLORS.black,
         textDecorationColor: 'transparent',
-        textShadowColor: 'transparent',
+        textShadowColor: 'transparent'
     }
 });
 
 CustomInput.propTypes = {
-    ...TextInput.propTypes,
+    //...TextInput.propTypes,
     icon: PropTypes.string,
+    isValid: PropTypes.bool,
     isPassword: PropTypes.bool,
-    iconColor: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     handleChangeText: PropTypes.func.isRequired,
@@ -76,10 +76,10 @@ CustomInput.propTypes = {
 
 CustomInput.defaultProps = {
     icon: '',
+    isValid: true,
     areaStyle: {},
     placeholder: '',
     isPassword: false,
-    iconColor: COLORS.theme,
     iconStyle: {marginRight: 12}
 };
 

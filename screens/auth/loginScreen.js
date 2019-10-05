@@ -1,41 +1,57 @@
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import STYLES from '../../helpers/styleHelper'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
-import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
-
 import Input from '../../components/inputComponent'
-import Image from '../../components/imageComponent'
-import Button from '../../components/buttonComponent'
 
 import { emitAuth } from '../../actions/authAction'
+import Image from '../../components/imageComponent'
+import Button from '../../components/buttonComponent'
+import { USER_AUTH } from "../../helpers/constantHelpers";
+import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionHelpers'
 
-const Login = ({navigation, ...props}) => {
+const Login = ({navigation, dispatch}) => {
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
+    const [email, setEmail] = useState({isValid: true, message: '', val: ''});
+    const [password, setPassword] = useState({isValid: true, message: '', val: ''});
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
+    // Login process
     const handleLogin = () => {
-        props.dispatch(emitAuth(email, password))
+        const _email = emailChecker(email);
+        const _password = passwordChecker(password);
+        // Set value
+        setEmail(_email);
+        setPassword(_password);
+
+        // TODO: make some tips for error type render
+        if(_email.isValid && _password.isValid) {
+            // Login and save user data in storage and store
+            // TODO: Api user check
+            const apiResponse = false;
+            if(apiResponse) {
+                // Save user auth in storage
+                setStorageItem(USER_AUTH, true).then(
+                    () => {
+                        dispatch(emitAuth(true));
+                    }
+                ).catch((error) => console.log(`Something when wrong ${error}`));
+            } else setInvalidCredentials(true)
+        }
     };
 
-    useEffect(() => {
-        //TODO: Dynamic load screen name by adding in helper
-        if(props.user.auth) {
-            Alert.alert(
-                'Information',
-                'You ara now login',
-                [
-                    {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: true }
-            )
-        }
-    });
+    // Alert for wrong credentials
+    if(invalidCredentials) {
+        Alert.alert(
+            'Information',
+            'Email and password does not match',
+            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
+            {cancelable: false}
+        );
+    }
 
+    // Render component
     return (
         <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
@@ -45,26 +61,32 @@ const Login = ({navigation, ...props}) => {
             <View style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       value={email}
+                       value={email.val}
                        placeholder={'Email'}
-                       handleChangeText={(value) => setEmail(value)}
+                       isValid={email.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
+                       handleChangeText={(val) => {
+                           setEmail({...email, isValid: true, val});
+                       }}
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
-                       value={password}
                        isPassword={true}
+                       value={password.val}
                        placeholder={'Password'}
-                       handleChangeText={(value) => setPassword(value)}
+                       isValid={password.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
+                       handleChangeText={(val) => {
+                           setPassword({...password, isValid: true, val});
+                       }}
                 />
                 {/*Login button*/}
                 <Button
                     text={'LOGIN'}
                     activeOpacity={0.5}
+                    textStyle={STYLES.authWhiteText}
                     handleOnPress={() => handleLogin()}
                     style={[STYLES.authSubmitButton, STYLES.middle]}
-                    textStyle={STYLES.authWhiteText}
                 />
             </View>
             <View style={{flex: 1}}>
@@ -73,8 +95,8 @@ const Login = ({navigation, ...props}) => {
                     activeOpacity={0.7}
                     textStyle={STYLES.authWhiteText}
                     text={'I do not have an account'}
-                    handleOnPress={() => navigation.navigate('register')}
                     style={[ STYLES.authLink, STYLES.middle]}
+                    handleOnPress={() => navigation.navigate('register')}
                 />
                 {/*Forgotten password link*/}
                 <Button
@@ -89,10 +111,13 @@ const Login = ({navigation, ...props}) => {
     )
 };
 
+// Fetch screen width
 const { width } = Dimensions.get("screen");
 
+// Proptypes from global store
 Login.propTypes = {
-    navigation: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 export default Login

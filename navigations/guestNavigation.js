@@ -1,7 +1,6 @@
-import Legal from '../screens/legal'
 import Login from '../containers/loginContainer'
-import Register from '../screens/auth/registerScreen'
 import Password from '../screens/auth/passwordScreen'
+import Register from '../containers/resgisterContainer'
 
 import { createStackNavigator } from 'react-navigation-stack';
 
@@ -23,13 +22,7 @@ const GuestStackNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    },
-    legal: {
-        screen: Legal,
-        navigationOptions: {
-            header: null
-        }
-    },
+    }
 });
 
 export default GuestStackNavigator
