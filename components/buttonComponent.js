@@ -13,8 +13,10 @@ function CustomButton({icon,
                        handleOnPress,
                        ...props}) {
 
+    // Icon
     const buttonIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
 
+    // Render
     return (
         <TouchableOpacity {...props} onPress={() => handleOnPress()}>
             <View style={[STYLES.middle, {flexDirection: 'row'}]}>
@@ -25,6 +27,7 @@ function CustomButton({icon,
     )
 }
 
+// Prop types
 CustomButton.propTypes = {
     ...TouchableOpacity.propTypes,
     text: PropTypes.string,
@@ -39,6 +42,7 @@ CustomButton.propTypes = {
     ])
 };
 
+// Default props
 CustomButton.defaultProps = {
     text: '',
     textStyle: {},

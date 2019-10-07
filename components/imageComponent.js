@@ -7,6 +7,8 @@ import STYLES from "../helpers/styleHelper"
 
 //TODO: improve image loading animation
 const CustomImage = ({areaStyle, ...props}) => {
+
+    // Render
     return (
         <View style={areaStyle}>
             <View style={styles.mainContainer} accessibilityIgnoresInvertColors={true}>
@@ -16,12 +18,14 @@ const CustomImage = ({areaStyle, ...props}) => {
     )
 };
 
+// Style
 const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: COLORS.theme
     }
 });
 
+// Prop types
 CustomImage.propTypes = {
     ...Image.propTypes,
     areaStyle: PropTypes.oneOfType([
@@ -30,6 +34,7 @@ CustomImage.propTypes = {
     ])
 };
 
+// Default props
 CustomImage.defaultProps = {
     areaStyle: [STYLES.middle, {flex: 1}]
 };

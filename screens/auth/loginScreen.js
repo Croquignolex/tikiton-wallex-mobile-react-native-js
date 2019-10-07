@@ -6,6 +6,7 @@ import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 
+import COLORS from "../../helpers/colorHelper";
 import { emitAuth } from '../../actions/authAction'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
@@ -14,8 +15,8 @@ import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/fun
 
 const Login = ({navigation, dispatch}) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
-    const [email, setEmail] = useState({isValid: true, message: '', val: ''});
-    const [password, setPassword] = useState({isValid: true, message: '', val: ''});
+    const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
+    const [password, setPassword] = useState({isValid: true, message: '', val: '',  errorMessageColor: COLORS.white});
 
     // Login process
     const handleLogin = () => {
@@ -53,17 +54,16 @@ const Login = ({navigation, dispatch}) => {
 
     // Render component
     return (
-        <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
             <View style={{flex: 3}}>
                 {/*Logo*/}
                 <Image source={IMAGES.logo} style={STYLES.authLogo}/>
             </View>
-            <View style={{flex: 3}}>
+            <KeyboardAvoidingView style={{flex: 3}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       value={email.val}
+                       input={email}
                        placeholder={'Email'}
-                       isValid={email.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                        handleChangeText={(val) => {
                            setEmail({...email, isValid: true, val});
@@ -71,10 +71,9 @@ const Login = ({navigation, dispatch}) => {
                 />
                 {/*Password input*/}
                 <Input icon={'lock'}
+                       input={password}
                        isPassword={true}
-                       value={password.val}
                        placeholder={'Password'}
-                       isValid={password.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                        handleChangeText={(val) => {
                            setPassword({...password, isValid: true, val});
@@ -88,8 +87,8 @@ const Login = ({navigation, dispatch}) => {
                     handleOnPress={() => handleLogin()}
                     style={[STYLES.authSubmitButton, STYLES.middle]}
                 />
-            </View>
-            <View style={{flex: 1}}>
+            </KeyboardAvoidingView>
+            <View style={{flex: 1, marginTop: width * 0.1}}>
                 {/*Register link*/}
                 <Button
                     activeOpacity={0.7}
@@ -107,14 +106,14 @@ const Login = ({navigation, dispatch}) => {
                     style={[{marginTop: 10}, STYLES.authLink, STYLES.middle]}
                 />
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 };
 
 // Fetch screen width
 const { width } = Dimensions.get("screen");
 
-// Proptypes from global store
+// Prop types from global store
 Login.propTypes = {
     dispatch: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
