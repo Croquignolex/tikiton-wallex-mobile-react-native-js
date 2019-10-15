@@ -3,7 +3,6 @@ import { AUTH } from "../actions/authAction";
 const initialState = {
     email: '',
     auth: false,
-    lastName: '',
     password: '',
     firstName: '',
 };

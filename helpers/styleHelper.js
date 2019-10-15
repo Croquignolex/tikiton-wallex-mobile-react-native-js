@@ -41,8 +41,8 @@ const STYLES = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 50,
         width: width * 0.8,
-        backgroundColor: COLORS.theme,
-        borderColor: COLORS.white
+        borderColor: COLORS.white,
+        backgroundColor: COLORS.theme
     },
     authWhiteText: {
         fontSize: 14,
@@ -52,7 +52,12 @@ const STYLES = StyleSheet.create({
     authLink: {
         width: width * 0.8,
         flexDirection: 'row'
-    }
+    },
+    transparent: {
+        borderWidth: 0,
+        borderColor: 'transparent',
+        backgroundColor: 'transparent'
+    },
 });
 
 export default STYLES

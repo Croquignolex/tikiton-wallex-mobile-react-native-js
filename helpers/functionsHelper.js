@@ -43,10 +43,22 @@ export const passwordChecker = (input) => {
 /**
  *
  * @param input
+ * @param passwordInput
+ * @returns {*}
+ */
+export const passwordConfirmChecker = (input, passwordInput) => {
+    return (input.val === passwordInput.val)
+        ? {...input, message: '', isValid: true}
+        : {...input, isValid: false, message: `Password confirmation does not match`};
+};
+
+/**
+ *
+ * @param input
  * @returns {*}
  */
 export const requiredChecker = (input) => {
-    return inRange(input, 1)
+    return inRange(input, 1, 255, 'This input is required')
 };
 
 /**
@@ -54,12 +66,14 @@ export const requiredChecker = (input) => {
  * @param input
  * @param min
  * @param max
+ * @param errorMessage
  * @returns {*}
  */
-const inRange = (input, min = 2, max = 255) => {
+const inRange = (input, min = 2, max = 255, errorMessage = undefined) => {
     const length = input.val.length;
+    const message = errorMessage ? errorMessage : `This input must have at least ${min} characters`;
 
     return (length <= max && length >= min)
         ? {...input, message: '', isValid: true}
-        : {...input, isValid: false, message: `The input must have at least ${length} characters`}
+        : {...input, isValid: false, message: message}
 };
