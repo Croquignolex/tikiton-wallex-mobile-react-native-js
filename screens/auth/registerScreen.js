@@ -18,14 +18,14 @@ import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
-import { PRIVACY_POLICY_LINK, USER_AUTH } from "../../helpers/constantHelpers";
+import { PRIVACY_POLICY_LINK, USER_AUTH } from "../../helpers/constantsHelper";
 import {
     emailChecker,
     setStorageItem,
     passwordChecker,
     requiredChecker,
     passwordConfirmChecker
-} from "../../helpers/functionHelpers";
+} from "../../helpers/functionsHelper";
 
 const Register = ({navigation, dispatch}) => {
     const [hasAgree, setHasAgree] = useState(false);

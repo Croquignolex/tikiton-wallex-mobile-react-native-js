@@ -5,13 +5,13 @@ import { View, TouchableOpacity, Text } from 'react-native'
 
 import STYLES from "../helpers/styleHelper"
 
-function CustomButton({icon,
+const CustomButton = ({icon,
                        text,
                        textStyle,
                        iconColor,
                        iconStyle,
                        handleOnPress,
-                       ...props}) {
+                       ...props}) => {
 
     // Icon
     const buttonIcon = icon && <Icon size={14} name={icon} color={iconColor} style={iconStyle}/>;
@@ -25,7 +25,7 @@ function CustomButton({icon,
             </View>
         </TouchableOpacity>
     )
-}
+};
 
 // Prop types
 CustomButton.propTypes = {

@@ -9,7 +9,7 @@ import COLORS from "../../helpers/colorHelper";
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { emailChecker } from "../../helpers/functionHelpers";
+import { emailChecker } from "../../helpers/functionsHelper";
 
 const Password = ({navigation}) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);

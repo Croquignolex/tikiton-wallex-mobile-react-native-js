@@ -2,7 +2,7 @@ import Login from '../containers/loginContainer'
 import Password from '../screens/auth/passwordScreen'
 import Register from '../containers/resgisterContainer'
 
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from 'react-navigation-stack'
 
 const GuestStackNavigator = createStackNavigator({
     login: {

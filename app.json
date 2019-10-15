@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Tikiton Wallex Mobile App",
-    "slug": "TikitonWallexMobileApp",
+    "slug": "tikiton-wallex-mobile-app",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -26,6 +26,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "description": "An easy wallets manager"
   }
 }

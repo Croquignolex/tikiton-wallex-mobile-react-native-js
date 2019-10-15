@@ -19,11 +19,9 @@ class Settings extends React.Component {
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
                         {/*Button are*/}
                         <SafeAreaView style={STYLES.middle}>
-                            <TouchableOpacity style={[styles.createButton, STYLES.middle]} activeOpacity={0.8} onPress={this.backHandle}>
-                                <Text style={[{color: COLORS.theme}, styles.createButtonText]}>
-                                    GO TO LOGIN
-                                </Text>
-                            </TouchableOpacity>
+                            <Text style={[{color: COLORS.theme}, styles.createButtonText]}>
+                                Settings page
+                            </Text>
                         </SafeAreaView>
                     </KeyboardAvoidingView>
                 </SafeAreaView>
@@ -37,7 +35,7 @@ const { width, height } = Dimensions.get("screen");
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: COLORS.lightGray
+        backgroundColor: COLORS.warning
     },
     logo: {
         width: 200,

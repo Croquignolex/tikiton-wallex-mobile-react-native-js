@@ -10,8 +10,8 @@ import COLORS from "../../helpers/colorHelper";
 import { emitAuth } from '../../actions/authAction'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { USER_AUTH } from "../../helpers/constantHelpers";
-import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionHelpers'
+import { USER_AUTH } from "../../helpers/constantsHelper";
+import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionsHelper'
 
 const Login = ({navigation, dispatch}) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
@@ -30,7 +30,7 @@ const Login = ({navigation, dispatch}) => {
         if(_email.isValid && _password.isValid) {
             // Login and save user data in storage and store
             // TODO: Api user check
-            const apiResponse = false;
+            const apiResponse = true;
             if(apiResponse) {
                 // Save user auth in storage
                 setStorageItem(USER_AUTH, true).then(

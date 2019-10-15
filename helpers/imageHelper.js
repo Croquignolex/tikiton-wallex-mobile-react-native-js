@@ -6,6 +6,7 @@ const IMAGES = {
         schedule: require('../assets/intro/schedule.png'),
     },
     logo: require('../assets/icon.png'),
+    logoInvert: require('../assets/icon-invert.png'),
 };
 
 export default IMAGES
