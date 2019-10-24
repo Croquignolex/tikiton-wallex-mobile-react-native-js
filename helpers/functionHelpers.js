@@ -26,6 +26,7 @@ export const getStorageItem = async (key) => {
  */
 export const emailChecker = (input) => {
     let regex = /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$/i;
+    // !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     return regex.test(input.val)
         ? {...input, message: '', isValid: true}
         : {...input, isValid: false, message: 'Incorrect email format'}

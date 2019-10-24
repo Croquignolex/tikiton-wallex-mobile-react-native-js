@@ -1,16 +1,17 @@
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import {View, Dimensions, KeyboardAvoidingView, StyleSheet, Alert, Linking} from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
 
-import { emitAuth } from "../../actions/authAction";
+import { emitAuth } from "../../redux/user/actions"
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
-import { PRIVACY_POLICY_LINK, USER_AUTH } from "../../helpers/constantHelpers";
+import { PRIVACY_POLICY_LINK, USER_AUTH } from "../../helpers/constantHelpers"
 import { emailChecker, passwordChecker, requiredChecker, setStorageItem } from "../../helpers/functionHelpers";
 
 const Register = ({navigation, dispatch}) => {
@@ -175,4 +176,15 @@ Register.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default Register
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

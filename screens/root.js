@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
@@ -18,7 +19,7 @@ const Root = ({ user }) => {
             getStorageItem(INTRO_SLIDES).then(
                 (data) => {
                     data = JSON.parse(data);
-                    if(data !== null) setShouldSlide(data);
+                    if(data != null) setShouldSlide(data);
                     else setShouldSlide(true);
 
                     setShouldRender(true);
@@ -59,4 +60,15 @@ Root.propTypes = {
     user: PropTypes.object.isRequired
 };
 
-export default Root
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Root);

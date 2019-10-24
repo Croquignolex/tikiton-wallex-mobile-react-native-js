@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import STYLES from '../../helpers/styleHelper'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
@@ -6,7 +7,7 @@ import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 
-import { emitAuth } from '../../actions/authAction'
+import { emitAuth } from '../../redux/user/actions'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import { USER_AUTH } from "../../helpers/constantHelpers";
@@ -120,4 +121,15 @@ Login.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default Login
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

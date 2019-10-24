@@ -1,38 +1,29 @@
-import { getStorageItem } from '../helpers/functionHelpers'
+import { getStorageItem } from '../../helpers/functionHelpers'
 
 // Action types
 export const AUTH = 'AUTH';
 
-/**
- *
- * @param flag
- * @returns {{flag: *, type: *}}
- */
+// Set auth level 1
 export const auth = (flag) => ({
     flag,
     type: AUTH
 });
 
-/**
- *
- * @returns {Function}
- */
+// Initialize user auth
 export const emitInitAuth = () => {
     return (dispatch) => {
+        // Fetch user auth in local storage
         getStorageItem('userAuth').then(
             (data) => {
                 data = JSON.parse(data);
-                if(data !== null) dispatch(auth(data));
+                if(data != null) dispatch(auth(data));
                 else dispatch(auth(false));
             }
         ).catch((error) => console.log(`Something when wrong ${error}`));
     }
 };
 
-/**
- *
- * @returns {Function}
- */
+// Set auth level 2
 export const emitAuth = (flag) => {
     return (dispatch) => {
         dispatch(auth(flag));
