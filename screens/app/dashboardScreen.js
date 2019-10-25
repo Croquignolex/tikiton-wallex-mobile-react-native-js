@@ -1,14 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import COLORS from '../../helpers/colorHelper'
 import STYLES from '../../helpers/styleHelper'
-import {SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
+import {SafeAreaView, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props)
     }
-
-
 
     render() {
         return (
@@ -58,4 +58,15 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Dashboard
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

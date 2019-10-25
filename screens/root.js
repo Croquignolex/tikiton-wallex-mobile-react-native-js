@@ -10,19 +10,19 @@ import rootNavigation from '../navigations/rootNavigation'
 import { getStorageItem, setStorageItem } from '../helpers/functionsHelper'
 
 const Root = ({ user }) => {
-    const [shouldSlide, setShouldSlide] = useState(true);
-    const [shouldRender, setShouldRender] = useState(false);
+    const [shouldSlide, setShouldSlide] = useState(undefined);
+    //const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
         // Manage intro sliders render
-        if(!shouldRender){
+        if(shouldSlide === undefined){
             getStorageItem(INTRO_SLIDES).then(
                 (data) => {
                     data = JSON.parse(data);
                     if(data != null) setShouldSlide(data);
                     else setShouldSlide(true);
 
-                    setShouldRender(true);
+                    //setShouldRender(true);
                 }
             ).catch((error) => console.log(`Something when wrong ${error}`));
         }
@@ -38,8 +38,14 @@ const Root = ({ user }) => {
     };
 
     // Render
-    if(shouldRender) {
-        if(shouldSlide) {
+    //if(shouldRender) {
+        if(shouldSlide === undefined) {
+            // TODO: render a loading view just like the slash sreen
+            console.log('render nothing')
+            return null;
+        }
+        else if(shouldSlide) {
+            console.log('render slider')
             return(
                 <AppIntroSlider slides={SLIDERS}
                     showSkipButton={true}
@@ -48,12 +54,19 @@ const Root = ({ user }) => {
                 />
             );
         } else {
-            const Navigation = createAppContainer(rootNavigation(user.auth));
-            return(<Navigation />);
+            console.log('this is auth', user.auth)
+            if(user.auth === undefined) {
+                console.log('render nothing 2 ')
+                return null;
+            }
+            else {
+                const Navigation = createAppContainer(rootNavigation(user.auth));
+                return(<Navigation />);
+            }
         }
-    } else {
+    /*} else {
         return null;
-    }
+    }*/
 };
 
 Root.propTypes = {

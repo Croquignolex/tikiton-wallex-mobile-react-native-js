@@ -8,7 +8,7 @@ import COLORS from "../helpers/colorHelper"
 
 const CustomCheckbox = ({color, check, handleOnPress, ...props}) => {
     // Check box
-    const checker = !check && <Icon name='check' size={14} color={color}/>;
+    const checker = check && <Icon name='check' size={14} color={color}/>;
 
     // Render
     return (

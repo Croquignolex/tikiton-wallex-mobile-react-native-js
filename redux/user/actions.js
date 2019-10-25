@@ -1,31 +1,33 @@
-import { getStorageItem } from '../../helpers/functionsHelper'
-
 // Action types
 export const AUTH = 'AUTH';
+export const BASIC_DATA = 'BASIC_DATA';
+export const SET_USER_BASIC_DATA = 'SET_USER_BASIC_DATA';
+export const CHECK_AUTHORIZATION = 'CHECK_AUTHORIZATION';
 
-// Set auth level 1
+//====================== Reducer actions
+// Auth action
 export const auth = (flag) => ({
     flag,
     type: AUTH
 });
 
-// Initialize user auth
-export const emitInitAuth = () => {
-    return (dispatch) => {
-        // Fetch user auth in local storage
-        getStorageItem('userAuth').then(
-            (data) => {
-                data = JSON.parse(data);
-                if(data != null) dispatch(auth(data));
-                else dispatch(auth(false));
-            }
-        ).catch((error) => console.log(`Something when wrong ${error}`));
-    }
-};
+// Set user basic data in store
+export const basicData = (email, firstName) => ({
+    email,
+    firstName,
+    type: BASIC_DATA
+});
 
-// Set auth level 2
-export const emitAuth = (flag) => {
-    return (dispatch) => {
-        dispatch(auth(flag));
-    }
-};
+
+//====================== Middleware actions
+// Authorization check action
+export const checkAuthorization = () => ({
+    type: CHECK_AUTHORIZATION
+});
+
+// Store user data after registration
+export const setUserBasicData = (email, firstName) => ({
+    email,
+    firstName,
+    type: SET_USER_BASIC_DATA
+});

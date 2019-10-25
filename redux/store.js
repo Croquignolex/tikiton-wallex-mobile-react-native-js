@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 
 import sagas from '../redux/sagas';
 import reducers from '../redux/reducers';
-import { emitInitAuth } from "./user/actions";
+import { checkAuthorization } from "./user/actions";
 
 // Fetch all middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -20,6 +20,6 @@ const store = createStore(
 sagaMiddleware.run(sagas);
 
 // Init global store
-store.dispatch(emitInitAuth());
+store.dispatch(checkAuthorization());
 
 export default store

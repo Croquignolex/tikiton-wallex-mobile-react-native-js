@@ -1,12 +1,10 @@
-import { AUTH } from "./actions";
+import { AUTH, BASIC_DATA } from "./actions";
 
 // Global state part
 const initialState = {
     email: '',
-    auth: false,
-    lastName: '',
-    password: '',
     firstName: '',
+    auth: undefined
 };
 
 // Reduce
@@ -19,6 +17,15 @@ function reduce(state = initialState, action) {
             nextState = {
                 ...state,
                 auth: action.flag
+            };
+            return nextState || state;
+        // Basic data
+        case BASIC_DATA:
+            nextState = {
+                ...state,
+                auth: true,
+                email: action.email,
+                firstName: action.firstName
             };
             return nextState || state;
         // Unknown action

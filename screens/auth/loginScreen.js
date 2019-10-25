@@ -8,14 +8,14 @@ import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 
 import COLORS from '../../helpers/colorHelper'
-import { emitAuth } from '../../redux/user/actions'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import { USER_AUTH } from '../../helpers/constantsHelper'
-import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionsHelper'
+import { setUserBasicData } from '../../redux/user/actions'
+import { setStorageItem } from '../../helpers/functionsHelper'
+import { emailChecker, passwordChecker } from '../../helpers/formCheckerHelper'
 
 const Login = ({navigation, dispatch}) => {
-    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '',  errorMessageColor: COLORS.white});
 
@@ -27,31 +27,34 @@ const Login = ({navigation, dispatch}) => {
         setEmail(_email);
         setPassword(_password);
 
-        // TODO: make some tips for error type render
         if(_email.isValid && _password.isValid) {
             // Login and save user data in storage and store
             // TODO: Api user check
-            const apiResponse = true;
-            if(apiResponse) {
-                // Save user auth in storage
-                setStorageItem(USER_AUTH, true).then(
-                    () => {
-                        dispatch(emitAuth(true));
-                    }
-                ).catch((error) => console.log(`Something when wrong ${error}`));
-            } else setInvalidCredentials(true)
+            const apiResponse = {statusCode: 200, status: true, data: {firstName: 'Xaxa'}};
+            if(apiResponse.status) {
+                // Save user data
+                dispatch(setUserBasicData(email.val, apiResponse.data.firstName));
+            } else {
+                if(apiResponse.statusCode === 400) {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Email and password does not match',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                } else {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Internal server error',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                }
+            }
         }
     };
-
-    // Alert for wrong credentials
-    if(invalidCredentials) {
-        Alert.alert(
-            'Information',
-            'Email and password does not match',
-            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
-            {cancelable: false}
-        );
-    }
 
     // Render component
     return (

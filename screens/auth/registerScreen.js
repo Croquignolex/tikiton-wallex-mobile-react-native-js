@@ -14,23 +14,21 @@ import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
 
 import COLORS from '../../helpers/colorHelper'
-import { emitAuth } from '../../redux/user/actions'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
+import { setUserBasicData } from '../../redux/user/actions'
 import { PRIVACY_POLICY_LINK, USER_AUTH } from '../../helpers/constantsHelper'
 import {
     emailChecker,
-    setStorageItem,
     passwordChecker,
     requiredChecker,
     passwordConfirmChecker
-} from '../../helpers/functionsHelper'
+} from '../../helpers/formCheckerHelper'
 
 const Register = ({navigation, dispatch}) => {
     const [hasAgree, setHasAgree] = useState(false);
-    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [firstName, setFirstName] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
@@ -48,31 +46,44 @@ const Register = ({navigation, dispatch}) => {
         setFirstName(_firstName);
         setConfirmPassword(_confirmPassword);
 
-        // TODO: make some tips for error type render
         if(_email.isValid && _password.isValid) {
-            // Register and save user data in storage and store
-            // TODO: Api user check
-            const apiResponse = false;
-            if(apiResponse && hasAgree) {
-                // Save user auth in storage
-                setStorageItem(USER_AUTH, true).then(
-                    () => {
-                        dispatch(emitAuth(true));
+            if(hasAgree)
+            {
+                // Register and save user data in storage and store
+                // TODO: Api user check
+                const apiResponse = {statusCode: 200, status: true};
+                if(apiResponse.status) {
+                    // Save user data
+                    dispatch(setUserBasicData(email.val, firstName.val));
+                } else {
+                    if(apiResponse.statusCode === 400) {
+                        // Display information
+                        Alert.alert(
+                            'Error',
+                            'User already exist',
+                            [{text: 'OK'}],
+                            {cancelable: false}
+                        );
+                    } else {
+                        // Display information
+                        Alert.alert(
+                            'Error',
+                            'Internal server error',
+                            [{text: 'OK'}],
+                            {cancelable: false}
+                        );
                     }
-                ).catch((error) => console.log(`Something when wrong ${error}`));
-            } else setInvalidCredentials(true)
+                }
+            } else {
+                Alert.alert(
+                    'Information',
+                    "You have to agree privacy policy",
+                    [{text: 'OK'}],
+                    {cancelable: false}
+                );
+            }
         }
     };
-
-    // Alert for agreement warning
-    if(invalidCredentials) {
-        Alert.alert(
-            'Information',
-            "You have to agree privacy policy",
-            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
-            {cancelable: false}
-        );
-    }
 
     // Privacy policy link
     const handlePrivacyPolicyLink = () => {
