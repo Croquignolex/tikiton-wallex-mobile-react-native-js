@@ -1,18 +1,19 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
 
+import COLORS from '../../helpers/colorHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { emailChecker } from "../../helpers/functionHelpers";
+import { emailChecker } from '../../helpers/functionsHelper'
 
 const Password = ({navigation}) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
-    const [email, setEmail] = useState({isValid: true, message: '', val: ''});
+    const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
 
     // Recover password process
     const handleRecover = () => {
@@ -48,17 +49,16 @@ const Password = ({navigation}) => {
 
     // Render component
     return (
-        <KeyboardAvoidingView style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
-            <View style={{flex: 3}}>
+        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+            <View style={{flex: 2.3}}>
                 {/*Logo*/}
                 <Image style={STYLES.authLogo} source={IMAGES.logo}/>
             </View>
-            <View style={{flex: 3}}>
+            <KeyboardAvoidingView style={{flex: 2}}>
                 {/*E-mail input*/}
                 <Input icon={'at'}
-                       value={email.val}
+                       input={email}
                        placeholder={'Email'}
-                       isValid={email.isValid}
                        areaStyle={{marginBottom: 15, width: width * 0.8}}
                        handleChangeText={(val) => {
                            setEmail({...email, isValid: true, val});
@@ -72,7 +72,7 @@ const Password = ({navigation}) => {
                     style={[STYLES.authSubmitButton, STYLES.middle]}
                     handleOnPress={() => handleRecover()}
                 />
-            </View>
+            </KeyboardAvoidingView>
             <View style={{flex: 1}}>
                 {/*Register link*/}
                 <Button
@@ -83,14 +83,14 @@ const Password = ({navigation}) => {
                     style={[STYLES.authLink, STYLES.middle]}
                 />
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 };
 
 // Fetch screen width
 const { width } = Dimensions.get("screen");
 
-// Proptypes from global store
+// Prop types from global store
 Password.propTypes = {
     navigation: PropTypes.object.isRequired,
 };

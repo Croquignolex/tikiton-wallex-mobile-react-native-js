@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { createAppContainer } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider'
 
-import SLIDERS from '../data/sliders'
-import { INTRO_SLIDES } from '../helpers/constantHelpers'
+import SLIDERS from '../helpers/slidersHelper'
+import { INTRO_SLIDES } from '../helpers/constantsHelper'
 import rootNavigation from '../navigations/rootNavigation'
-import { getStorageItem, setStorageItem } from '../helpers/functionHelpers'
+import { getStorageItem, setStorageItem } from '../helpers/functionsHelper'
 
 const Root = ({ user }) => {
     const [shouldSlide, setShouldSlide] = useState(true);

@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from "prop-types"
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { SafeAreaView, View, TextInput, StyleSheet } from 'react-native'
+import { SafeAreaView, View, TextInput, StyleSheet, Text } from 'react-native'
 
 import COLORS from "../helpers/colorHelper"
 import STYLES from "../helpers/styleHelper"
 
 const CustomInput = ({icon,
-                      isValid,
+                      input,
                       areaStyle,
                       iconColor,
                       iconStyle,
@@ -15,14 +15,28 @@ const CustomInput = ({icon,
                       handleChangeText,
                       ...props}) => {
 
-    const inputIcon = icon && <Icon size={14} name={icon} color={isValid ? COLORS.black : COLORS.red} style={iconStyle}/>;
+    const {isValid, val, message, errorMessageColor} = input;
 
+    // icon
+    const inputIcon = icon && <Icon size={14}
+                                    name={icon}
+                                    style={iconStyle}
+                                    color={isValid ? COLORS.black : COLORS.red}/>;
+
+    // Error message
+    const errorMessage = !isValid && <Text style={errorMessageColor
+                                            ? {color: errorMessageColor}
+                                            : {color: COLORS.red}}>
+                                         {message}
+                                     </Text>;
+    // Render
     return (
         <SafeAreaView style={areaStyle}>
             <View style={styles.mainContainer}>
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
                     {inputIcon}
                     <TextInput {...props}
+                               value={val}
                                secureTextEntry={isPassword}
                                placeholderTextColor={COLORS.muted}
                                underlineColorAndroid="transparent"
@@ -30,14 +44,16 @@ const CustomInput = ({icon,
                                style={[styles.inputStyles, isValid ? {color: COLORS.black} : {color: COLORS.red}]}
                     />
                 </View>
+                {errorMessage}
             </View>
         </SafeAreaView>
     )
 };
 
+// Style
 const styles = StyleSheet.create({
     mainContainer: {
-        marginVertical: 8,
+        marginVertical: 5,
         alignContent: 'center'
     },
     inputViewStyles: {
@@ -56,13 +72,12 @@ const styles = StyleSheet.create({
     }
 });
 
+// Prop types
 CustomInput.propTypes = {
-    //...TextInput.propTypes,
     icon: PropTypes.string,
-    isValid: PropTypes.bool,
     isPassword: PropTypes.bool,
     placeholder: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    input: PropTypes.object.isRequired,
     handleChangeText: PropTypes.func.isRequired,
     areaStyle: PropTypes.oneOfType([
         PropTypes.object,
@@ -74,9 +89,9 @@ CustomInput.propTypes = {
     ])
 };
 
+// Default props
 CustomInput.defaultProps = {
     icon: '',
-    isValid: true,
     areaStyle: {},
     placeholder: '',
     isPassword: false,

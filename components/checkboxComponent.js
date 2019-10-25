@@ -7,8 +7,10 @@ import STYLES from "../helpers/styleHelper"
 import COLORS from "../helpers/colorHelper"
 
 const CustomCheckbox = ({color, check, handleOnPress, ...props}) => {
+    // Check box
     const checker = !check && <Icon name='check' size={14} color={color}/>;
 
+    // Render
     return (
         <TouchableOpacity
             {...props}
@@ -21,6 +23,7 @@ const CustomCheckbox = ({color, check, handleOnPress, ...props}) => {
     )
 };
 
+// Style
 const styles = StyleSheet.create({
     checkboxView: {
         width: 20,
@@ -31,6 +34,7 @@ const styles = StyleSheet.create({
     },
 });
 
+// Prop types
 CustomCheckbox.propTypes = {
     ...TouchableOpacity.propTypes,
     color: PropTypes.string,
@@ -38,6 +42,7 @@ CustomCheckbox.propTypes = {
     handleOnPress: PropTypes.func.isRequired
 };
 
+// Default props
 CustomCheckbox.defaultProps = {
     color: COLORS.white
 };

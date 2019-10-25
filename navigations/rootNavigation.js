@@ -1,4 +1,4 @@
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator } from 'react-navigation'
 
 import Auth from './authNavigation'
 import Guest from './guestNavigation'

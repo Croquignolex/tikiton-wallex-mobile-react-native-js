@@ -3,12 +3,14 @@ import COLORS from '../../helpers/colorHelper'
 import STYLES from '../../helpers/styleHelper'
 import {SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
-class Dashboard extends React.Component {
+class Notifications extends React.Component {
     constructor(props) {
         super(props);
     }
 
-
+    backHandle = () => {
+        this.props.navigation.navigate('login');
+    };
 
     render() {
         return (
@@ -18,7 +20,7 @@ class Dashboard extends React.Component {
                         {/*Button are*/}
                         <SafeAreaView style={STYLES.middle}>
                             <Text style={[{color: COLORS.theme}, styles.createButtonText]}>
-                                Dashboard page
+                                Notifications page
                             </Text>
                         </SafeAreaView>
                     </KeyboardAvoidingView>
@@ -33,7 +35,7 @@ const { width, height } = Dimensions.get("screen");
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: COLORS.facebook
+        backgroundColor: COLORS.success
     },
     logo: {
         width: 200,
@@ -58,4 +60,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Dashboard
+export default Notifications

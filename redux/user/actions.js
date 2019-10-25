@@ -1,4 +1,4 @@
-import { getStorageItem } from '../../helpers/functionHelpers'
+import { getStorageItem } from '../../helpers/functionsHelper'
 
 // Action types
 export const AUTH = 'AUTH';
