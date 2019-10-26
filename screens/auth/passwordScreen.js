@@ -55,7 +55,7 @@ const Password = ({navigation}) => {
 
     // Render component
     return (
-        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle]} behavior="padding" enabled>
             <View style={{flex: 2.3}}>
                 {/*Logo*/}
                 <Image style={STYLES.authLogo} source={IMAGES.logo}/>

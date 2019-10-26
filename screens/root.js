@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { createAppContainer } from 'react-navigation';
+import { View, Image, Dimensions, ActivityIndicator } from 'react-native'
+import { createAppContainer } from 'react-navigation'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
+import IMAGES from '../helpers/imageHelper'
+import STYLES from '../helpers/styleHelper'
 import SLIDERS from '../helpers/slidersHelper'
 import { INTRO_SLIDES } from '../helpers/constantsHelper'
 import rootNavigation from '../navigations/rootNavigation'
@@ -11,18 +14,15 @@ import { getStorageItem, setStorageItem } from '../helpers/functionsHelper'
 
 const Root = ({ user }) => {
     const [shouldSlide, setShouldSlide] = useState(undefined);
-    //const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
         // Manage intro sliders render
         if(shouldSlide === undefined){
             getStorageItem(INTRO_SLIDES).then(
-                (data) => {
+                (data) => { 
                     data = JSON.parse(data);
                     if(data != null) setShouldSlide(data);
                     else setShouldSlide(true);
-
-                    //setShouldRender(true);
                 }
             ).catch((error) => console.log(`Something when wrong ${error}`));
         }
@@ -37,37 +37,42 @@ const Root = ({ user }) => {
         ).catch((error) => console.log(`Something when wrong ${error}`));
     };
 
+    // Full screen loading view to avoid white screen
+    const fullScreenLoading = (
+        <View style={[STYLES.middle, {flex: 1}]} behavior="padding" enabled> 
+            <Image source={IMAGES.splash} style={{resizeMode: 'contain', width: width, height: height}}/>
+        </View>
+    );
+
     // Render
-    //if(shouldRender) {
-        if(shouldSlide === undefined) {
-            // TODO: render a loading view just like the slash sreen
-            console.log('render nothing')
-            return null;
+    if(shouldSlide === undefined) {
+        // Render full screen loading view
+        return (fullScreenLoading); 
+    }
+    else if(shouldSlide) {
+        console.log('render slider')
+        return(
+            <AppIntroSlider slides={SLIDERS}
+                showSkipButton={true}
+                onDone={() => slidersComplete()}
+                onSkip={() => slidersComplete()}
+            />
+        );
+    } else {
+        console.log('this is auth', user.auth)
+        if(user.auth === undefined) {
+            // Render full screen loading view 
+            return (fullScreenLoading); 
         }
-        else if(shouldSlide) {
-            console.log('render slider')
-            return(
-                <AppIntroSlider slides={SLIDERS}
-                    showSkipButton={true}
-                    onDone={() => slidersComplete()}
-                    onSkip={() => slidersComplete()}
-                />
-            );
-        } else {
-            console.log('this is auth', user.auth)
-            if(user.auth === undefined) {
-                console.log('render nothing 2 ')
-                return null;
-            }
-            else {
-                const Navigation = createAppContainer(rootNavigation(user.auth));
-                return(<Navigation />);
-            }
+        else {
+            const Navigation = createAppContainer(rootNavigation(user.auth));
+            return(<Navigation />);
         }
-    /*} else {
-        return null;
-    }*/
+    }
 };
+
+// Fetch screen width
+const { width, height } = Dimensions.get("screen");
 
 Root.propTypes = {
     user: PropTypes.object.isRequired

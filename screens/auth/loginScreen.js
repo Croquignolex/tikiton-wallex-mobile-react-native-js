@@ -58,7 +58,7 @@ const Login = ({navigation, dispatch}) => {
 
     // Render component
     return (
-        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle]} behavior="padding" enabled>
             <View style={{flex: 3}}>
                 {/*Logo*/}
                 <Image source={IMAGES.logo} style={STYLES.authLogo}/>
