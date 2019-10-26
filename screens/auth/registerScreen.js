@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import {
     View,
@@ -12,24 +13,22 @@ import {
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
 
-import COLORS from "../../helpers/colorHelper";
-import { emitAuth } from "../../actions/authAction";
+import COLORS from '../../helpers/colorHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
-import { PRIVACY_POLICY_LINK, USER_AUTH } from "../../helpers/constantsHelper";
+import { setUserBasicData } from '../../redux/user/actions'
+import { PRIVACY_POLICY_LINK, USER_AUTH } from '../../helpers/constantsHelper'
 import {
     emailChecker,
-    setStorageItem,
     passwordChecker,
     requiredChecker,
     passwordConfirmChecker
-} from "../../helpers/functionsHelper";
+} from '../../helpers/formCheckerHelper'
 
 const Register = ({navigation, dispatch}) => {
     const [hasAgree, setHasAgree] = useState(false);
-    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [firstName, setFirstName] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
@@ -47,31 +46,44 @@ const Register = ({navigation, dispatch}) => {
         setFirstName(_firstName);
         setConfirmPassword(_confirmPassword);
 
-        // TODO: make some tips for error type render
         if(_email.isValid && _password.isValid) {
-            // Register and save user data in storage and store
-            // TODO: Api user check
-            const apiResponse = false;
-            if(apiResponse && hasAgree) {
-                // Save user auth in storage
-                setStorageItem(USER_AUTH, true).then(
-                    () => {
-                        dispatch(emitAuth(true));
+            if(hasAgree)
+            {
+                // Register and save user data in storage and store
+                // TODO: Api user check
+                const apiResponse = {statusCode: 200, status: true};
+                if(apiResponse.status) {
+                    // Save user data
+                    dispatch(setUserBasicData(email.val, firstName.val));
+                } else {
+                    if(apiResponse.statusCode === 400) {
+                        // Display information
+                        Alert.alert(
+                            'Error',
+                            'User already exist',
+                            [{text: 'OK'}],
+                            {cancelable: false}
+                        );
+                    } else {
+                        // Display information
+                        Alert.alert(
+                            'Error',
+                            'Internal server error',
+                            [{text: 'OK'}],
+                            {cancelable: false}
+                        );
                     }
-                ).catch((error) => console.log(`Something when wrong ${error}`));
-            } else setInvalidCredentials(true)
+                }
+            } else {
+                Alert.alert(
+                    'Information',
+                    "You have to agree privacy policy",
+                    [{text: 'OK'}],
+                    {cancelable: false}
+                );
+            }
         }
     };
-
-    // Alert for agreement warning
-    if(invalidCredentials) {
-        Alert.alert(
-            'Information',
-            "You have to agree privacy policy",
-            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
-            {cancelable: false}
-        );
-    }
 
     // Privacy policy link
     const handlePrivacyPolicyLink = () => {
@@ -85,7 +97,7 @@ const Register = ({navigation, dispatch}) => {
 
     // Render component
     return (
-        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle]} behavior="padding" enabled>
             <View style={{flex: 1.7}}>
                 {/*Logo*/}
                 <Image style={STYLES.authLogo} source={IMAGES.logo}/>
@@ -187,4 +199,15 @@ Register.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default Register
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

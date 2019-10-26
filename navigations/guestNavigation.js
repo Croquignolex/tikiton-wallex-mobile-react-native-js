@@ -1,6 +1,6 @@
-import Login from '../containers/loginContainer'
+import Login from '../screens/auth/loginScreen'
 import Password from '../screens/auth/passwordScreen'
-import Register from '../containers/resgisterContainer'
+import Register from '../screens/auth/registerScreen'
 
 import { createStackNavigator } from 'react-navigation-stack'
 

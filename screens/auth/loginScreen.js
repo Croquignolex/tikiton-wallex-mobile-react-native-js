@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import STYLES from '../../helpers/styleHelper'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
@@ -6,15 +7,15 @@ import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 import IMAGES from '../../helpers/imageHelper'
 import Input from '../../components/inputComponent'
 
-import COLORS from "../../helpers/colorHelper";
-import { emitAuth } from '../../actions/authAction'
+import COLORS from '../../helpers/colorHelper'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { USER_AUTH } from "../../helpers/constantsHelper";
-import { emailChecker, passwordChecker, setStorageItem } from '../../helpers/functionsHelper'
+import { USER_AUTH } from '../../helpers/constantsHelper'
+import { setUserBasicData } from '../../redux/user/actions'
+import { setStorageItem } from '../../helpers/functionsHelper'
+import { emailChecker, passwordChecker } from '../../helpers/formCheckerHelper'
 
 const Login = ({navigation, dispatch}) => {
-    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '',  errorMessageColor: COLORS.white});
 
@@ -26,35 +27,38 @@ const Login = ({navigation, dispatch}) => {
         setEmail(_email);
         setPassword(_password);
 
-        // TODO: make some tips for error type render
         if(_email.isValid && _password.isValid) {
             // Login and save user data in storage and store
             // TODO: Api user check
-            const apiResponse = true;
-            if(apiResponse) {
-                // Save user auth in storage
-                setStorageItem(USER_AUTH, true).then(
-                    () => {
-                        dispatch(emitAuth(true));
-                    }
-                ).catch((error) => console.log(`Something when wrong ${error}`));
-            } else setInvalidCredentials(true)
+            const apiResponse = {statusCode: 200, status: true, data: {firstName: 'Xaxa'}};
+            if(apiResponse.status) {
+                // Save user data
+                dispatch(setUserBasicData(email.val, apiResponse.data.firstName));
+            } else {
+                if(apiResponse.statusCode === 400) {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Email and password does not match',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                } else {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Internal server error',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                }
+            }
         }
     };
 
-    // Alert for wrong credentials
-    if(invalidCredentials) {
-        Alert.alert(
-            'Information',
-            'Email and password does not match',
-            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
-            {cancelable: false}
-        );
-    }
-
     // Render component
     return (
-        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle]} behavior="padding" enabled>
             <View style={{flex: 3}}>
                 {/*Logo*/}
                 <Image source={IMAGES.logo} style={STYLES.authLogo}/>
@@ -119,4 +123,15 @@ Login.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default Login
+// Map dispatch function to component props
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: (action) => { dispatch(action)}
+});
+
+// Map state function to component props
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+// Connect React to Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

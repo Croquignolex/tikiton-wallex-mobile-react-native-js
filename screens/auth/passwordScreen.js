@@ -1,18 +1,17 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
 
-import COLORS from "../../helpers/colorHelper";
+import COLORS from '../../helpers/colorHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { emailChecker } from "../../helpers/functionsHelper";
+import { emailChecker } from '../../helpers/formCheckerHelper'
 
 const Password = ({navigation}) => {
-    const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
 
     // Recover password process
@@ -21,35 +20,42 @@ const Password = ({navigation}) => {
         // Set value
         setEmail(_email);
 
-        // TODO: make some tips for error type render
         if(_email.isValid) {
-            // TODO: Api send reset link
-            const apiResponse = false;
-            if(apiResponse) {
+            // TODO: Api send reset link - return false (mail not found 400, exception 500), true (send)
+            const apiResponse = {statusCode: 200, status: true};
+            if(apiResponse.status) {
                 // Display information
                 Alert.alert(
                     'Information',
-                    'A password reset has been send, check your ail please',
-                    [{text: 'OK'}],
+                    'A password reset has been send, check your mail please',
+                    [{text: 'OK', onPress: () => navigation.navigate('login')}],
                     {cancelable: false}
                 );
-            } else setInvalidCredentials(true)
+            } else {
+                if(apiResponse.statusCode === 400) {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Your mail address is not found',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                } else {
+                    // Display information
+                    Alert.alert(
+                        'Error',
+                        'Internal server error',
+                        [{text: 'OK'}],
+                        {cancelable: false}
+                    );
+                }
+            }
         }
     };
 
-    // Alert for wrong credentials
-    if(invalidCredentials) {
-        Alert.alert(
-            'Information',
-            'Email not found. We recommend you to create an account',
-            [{text: 'OK', onPress: () => setInvalidCredentials(false)}],
-            {cancelable: false}
-        );
-    }
-
     // Render component
     return (
-        <View style={[STYLES.authMainContainer, STYLES.middle, {flex: 1}]} behavior="padding" enabled>
+        <View style={[STYLES.authMainContainer, STYLES.middle]} behavior="padding" enabled>
             <View style={{flex: 2.3}}>
                 {/*Logo*/}
                 <Image style={STYLES.authLogo} source={IMAGES.logo}/>

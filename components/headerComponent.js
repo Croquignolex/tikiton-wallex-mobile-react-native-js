@@ -5,15 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {
     View,
     Text,
-    Button,
     Platform,
     Dimensions,
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
 
-import COLORS from '../helpers/colorHelper';
-import STYLES from '../helpers/styleHelper';
+import COLORS from '../helpers/colorHelper'
 import IconLink from '../components/IconLinkComponent'
 
 const CustomHeader = ({back, title, navigation}) => {
@@ -65,6 +63,11 @@ const CustomHeader = ({back, title, navigation}) => {
                 <IconLink
                     name="cog"
                     handleOnPress={() => navigation.navigate('settings')}
+                />
+                {/*TODO: Improve logout login also in drawer menu*/}
+                <IconLink
+                    name="lock"
+                    handleOnPress={() => navigation.navigate('login')}
                 />
             </View>
         );
