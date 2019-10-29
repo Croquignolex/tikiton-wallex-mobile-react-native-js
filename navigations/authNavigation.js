@@ -57,7 +57,7 @@ const DashboardStackNavigator = createStackNavigator({
     dashboard: {
         screen: Dashboard,
         navigationOptions: ({ navigation }) => ({
-            header: <Header title={DASHBOARD_PAGE} navigation={navigation} />
+            header: <Header title={DASHBOARD_PAGE} navigation={navigation} isDashboardScreen={true} />
         })
     }
 },{

@@ -56,7 +56,7 @@ const CustomDrawerItem = ({focused, title}) => {
                 {renderIcon()}
             </View>
             <View style={[{flex: 0.9, flexDirection: 'row'}, STYLES.center]}>
-                <Text style={[{fontSize: 17}, textStyle]}>{title}</Text>
+                <Text style={[{fontSize: 15}, textStyle]}>{title}</Text>
             </View>
         </View>
     );
@@ -65,7 +65,7 @@ const CustomDrawerItem = ({focused, title}) => {
 // Styles
 const styles = StyleSheet.create({
     defaultStyle: {
-        paddingVertical: 10,
+        paddingVertical: 12,
         marginHorizontal: 2,
         flexDirection: 'row',
     },

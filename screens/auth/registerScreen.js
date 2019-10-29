@@ -19,7 +19,7 @@ import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
 import { setUserBasicData } from '../../redux/user/actions'
-import { PRIVACY_POLICY_LINK, USER_AUTH } from '../../helpers/constantsHelper'
+import { PRIVACY_POLICY_LINK } from '../../helpers/constantsHelper'
 import {
     emailChecker,
     passwordChecker,

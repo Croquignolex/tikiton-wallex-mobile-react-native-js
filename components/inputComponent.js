@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types"
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { SafeAreaView, View, TextInput, StyleSheet, Text } from 'react-native'
+import { View, TextInput, StyleSheet, Text } from 'react-native'
 
 import COLORS from "../helpers/colorHelper"
 import STYLES from "../helpers/styleHelper"
@@ -31,7 +31,7 @@ const CustomInput = ({icon,
                                      </Text>;
     // Render
     return (
-        <SafeAreaView style={areaStyle}>
+        <View style={areaStyle}>
             <View style={styles.mainContainer}>
                 <View style={[styles.inputViewStyles, STYLES.borderTransparent, STYLES.middle]}>
                     {inputIcon}
@@ -46,7 +46,7 @@ const CustomInput = ({icon,
                 </View>
                 {errorMessage}
             </View>
-        </SafeAreaView>
+        </View>
     )
 };
 
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     inputStyles: {
         flex: 1,
         fontSize: 15,
-        textDecorationColor: 'transparent',
-        textShadowColor: 'transparent'
+        textShadowColor: 'transparent',
+        textDecorationColor: 'transparent'
     }
 });
 
@@ -91,7 +91,7 @@ CustomInput.propTypes = {
 
 // Default props
 CustomInput.defaultProps = {
-    icon: '',
+    icon: false,
     areaStyle: {},
     placeholder: '',
     isPassword: false,

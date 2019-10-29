@@ -10,9 +10,7 @@ import Input from '../../components/inputComponent'
 import COLORS from '../../helpers/colorHelper'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
-import { USER_AUTH } from '../../helpers/constantsHelper'
 import { setUserBasicData } from '../../redux/user/actions'
-import { setStorageItem } from '../../helpers/functionsHelper'
 import { emailChecker, passwordChecker } from '../../helpers/formCheckerHelper'
 
 const Login = ({navigation, dispatch}) => {
