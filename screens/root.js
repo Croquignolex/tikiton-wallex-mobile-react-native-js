@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { View, Image, Dimensions, ActivityIndicator } from 'react-native'
 import { createAppContainer } from 'react-navigation'
+import { View, Image, Dimensions } from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
 import IMAGES from '../helpers/imageHelper'
@@ -50,7 +50,6 @@ const Root = ({ user }) => {
         return (fullScreenLoading); 
     }
     else if(shouldSlide) {
-        console.log('render slider')
         return(
             <AppIntroSlider slides={SLIDERS}
                 showSkipButton={true}
@@ -59,7 +58,6 @@ const Root = ({ user }) => {
             />
         );
     } else {
-        console.log('this is auth', user.auth)
         if(user.auth === undefined) {
             // Render full screen loading view 
             return (fullScreenLoading); 
