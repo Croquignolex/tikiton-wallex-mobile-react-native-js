@@ -6,30 +6,25 @@ import {
     View,
     Text,
     Platform,
+    TextInput,
     Dimensions,
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
 
+import STYLES from '../helpers/styleHelper'
 import COLORS from '../helpers/colorHelper'
+import Image from '../components/imageComponent'
 import IconLink from '../components/IconLinkComponent'
+import IMAGES from "../helpers/imageHelper";
 
-const CustomHeader = ({back, title, navigation}) => {
-    // Drawer toggle
-    const handleDrawerToggle = () => {
-        return (
-            back
-            ? navigation.goBack()
-            : navigation.openDrawer()
-        );
-    };
-
+const CustomHeader = ({back, title, navigation, isDashboardScreen, isSearchScreen}) => {
     // Left area
     const renderLeft = () => {
         if (back) {
             return (
                 <View style={styles.left}>
-                    <TouchableOpacity onPress={() => handleDrawerToggle()}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Icon
                             size={20}
                             name='chevron-left'
@@ -41,11 +36,9 @@ const CustomHeader = ({back, title, navigation}) => {
         }
         return (
             <View style={styles.left}>
-                <Icon
-                    size={20}
-                    name='bars'
-                    color={COLORS.white}
-                    onPress={() => handleDrawerToggle()}
+                <Image source={IMAGES.logo}
+                   style={{width: 30, height: 30}}
+                   areaStyle={{width: 30, height: 30}}
                 />
             </View>
         );
@@ -54,81 +47,48 @@ const CustomHeader = ({back, title, navigation}) => {
     // Right area
     const renderRight = () => {
         return (
-            <View  style={[styles.right, {alignItems: 'flex-end', flexDirection: 'row'}]}>
+            <View style={[styles.right, {alignItems: 'flex-end', flexDirection: 'row'}]}>
                 <IconLink
-                    name="bell"
-                    view={true}
-                    handleOnPress={() => navigation.navigate('notifications')}
+                    name="search"
+                    handleOnPress={() => navigation.navigate('search')}
                 />
                 <IconLink
-                    name="cog"
-                    handleOnPress={() => navigation.navigate('settings')}
-                />
-                {/*TODO: Improve logout login also in drawer menu*/}
-                <IconLink
-                    name="lock"
-                    handleOnPress={() => navigation.navigate('login')}
+                    name="ellipsis-v"
+                    handleOnPress={() => navigation.navigate('search')}
                 />
             </View>
         );
     };
 
     // Search bar
-    /*const renderSearch = () => {
-        //TODO: this has to be an input, search input
+    const renderSearch = () => {
         return (
-            <Text/>
-        );
-    };
-
-    // Options tabs
-    const renderOptions = () => {
-        const { optionLeft, optionRight } = props;
-
-        return (
-            <View row style={[styles.options, {flexDirection: 'row'}]}>
-                <Button shadowless style={[styles.tab, styles.divider]}>
-                    <Block row middle>
-                        <Icon name="diamond" style={{ paddingRight: 8 }} color={COLORS.icon} />
-                        <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
-                    </Block>
-                </Button>
-                <Button shadowless style={styles.tab}>
-                    <Block row middle>
-                        <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }}/>
-                        <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
-                    </Block>
-                </Button>
+            <View style={{flex: 2.5, marginHorizontal: 15, height: height * 0.07, justifyContent: 'center'}}>
+                <View style={[styles.search, STYLES.borderTransparent, STYLES.middle]}>
+                    <Icon size={14} color={COLORS.muted} name="search" style={{marginRight: 12}}/>
+                    <TextInput
+                        autoFocus={true}
+                        placeholder="Search..."
+                        style={styles.searchInput}
+                        placeholderTextColor={COLORS.muted}
+                        underlineColorAndroid="transparent"
+                    />
+                </View>
             </View>
         );
     };
 
     // Tabs menu
     const renderTabs = () => {
+        // TODO improve dashboard view pages
         //const { tabs, tabIndex } = props;
         //const defaultTab = tabs && tabs[0] && tabs[0].id;
 
         //if (!tabs) return null;
-
-        //TODO: this has to be a flat list
         return (
-            <Text/>
+            <Text style={{marginBottom: 20}}/>
         )
     };
-
-    // Header
-    const renderHeader = () => {
-        const { search, options, tabs } = props;
-        if (search || tabs || options) {
-            return (
-                <View style={STYLES.center}>
-                    {search ? renderSearch() : null}
-                    {options ? renderOptions() : null}
-                    {tabs ? renderTabs() : null}
-                </View>
-            );
-        }
-    };*/
 
     // Render
     return (
@@ -136,15 +96,27 @@ const CustomHeader = ({back, title, navigation}) => {
             <View style={styles.navbar}>
                 {/*Render Left icon*/}
                 {renderLeft()}
+
                 {/*Render title*/}
-                <View style={styles.title}>
-                    <Text style={styles.titleText}>{title}</Text>
-                </View>
+                {!isSearchScreen && (
+                    <View style={styles.title}>
+                        <Text style={styles.titleText}>{title}</Text>
+                    </View>
+                )}
+
                 {/*Render right icons*/}
-                {renderRight()}
+                {!isSearchScreen && renderRight()}
+
+                {/*Render search bar*/}
+                {isSearchScreen && renderSearch()}
             </View>
-            {/*Render header*/}
-            {/*{renderHeader()}*/}
+
+            {/*Render dashboard header*/}
+            {/*{isDashboardScreen  && (
+                <View style={STYLES.center}>
+                    {renderTabs()}
+                </View>
+            )}*/}
         </View>
     )
 };
@@ -160,20 +132,18 @@ const styles = StyleSheet.create({
     left: {
         flex: 0.2,
         marginLeft: 16,
-        paddingVertical: 12,
         height: height * 0.07,
         justifyContent: 'center'
     },
     right: {
         flex: 0.5,
-        marginRight: 16,
-        alignItems: 'center',
         height: height * 0.07,
         justifyContent: 'center'
     },
     title: {
         flex: 2,
         fontSize: 17,
+        marginLeft: 15,
         height: height * 0.07,
         justifyContent: 'center'
     },
@@ -184,9 +154,8 @@ const styles = StyleSheet.create({
         color: COLORS.white,
     },
     navbar: {
-        zIndex: 5,
         width: 'auto',
-        height: 16 * 4.125,
+        height: 16 * 4,
         paddingVertical: 16,
         flexDirection: 'row',
         alignItems: 'center',
@@ -203,25 +172,23 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.theme,
         shadowOffset: { width: 0, height: 2 }
     },
-    header: {
-        backgroundColor: COLORS.theme
-    },
     divider: {
         borderRightWidth: 0.3,
         borderRightColor: COLORS.theme
     },
-    search: {
-        height: 48,
-        borderWidth: 1,
-        borderRadius: 3,
-        width: width - 32,
-        marginHorizontal: 16,
-        borderColor: COLORS.border
+    searchInput: {
+        flex: 1,
+        fontSize: 15,
+        textShadowColor: 'transparent',
+        textDecorationColor: 'transparent'
     },
-    options: {
-        elevation: 4,
-        marginTop: 10,
-        marginBottom: 24
+    search: {
+        height: 40,
+        width: '100%',
+        borderRadius: 50,
+        flexDirection: 'row',
+        paddingHorizontal: 16,
+        backgroundColor: COLORS.white,
     },
     tab: {
         height: 24,
@@ -242,13 +209,17 @@ const styles = StyleSheet.create({
 // Prop types
 CustomHeader.propTypes = {
     back: PropTypes.bool,
+    isSearchScreen: PropTypes.bool,
+    isDashboardScreen: PropTypes.bool,
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired
 };
 
 // Default props
 CustomHeader.defaultProps = {
-    back: false
+    back: false,
+    isSearchScreen: false,
+    isDashboardScreen: false
 };
 
 export default withNavigation(CustomHeader);

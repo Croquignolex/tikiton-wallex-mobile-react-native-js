@@ -12,14 +12,13 @@ import {
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
-
 import COLORS from '../../helpers/colorHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import Checkbox from '../../components/checkboxComponent'
 import { setUserBasicData } from '../../redux/user/actions'
-import { PRIVACY_POLICY_LINK, USER_AUTH } from '../../helpers/constantsHelper'
+import { PRIVACY_POLICY_LINK } from '../../helpers/constantsHelper'
 import {
     emailChecker,
     passwordChecker,
@@ -27,7 +26,7 @@ import {
     passwordConfirmChecker
 } from '../../helpers/formCheckerHelper'
 
-const Register = ({navigation, dispatch}) => {
+const RegisterScreen = ({navigation, dispatch}) => {
     const [hasAgree, setHasAgree] = useState(false);
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
 });
 
 // Prop types from global store
-Register.propTypes = {
+RegisterScreen.propTypes = {
     dispatch: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
 };
@@ -210,4 +209,4 @@ const mapStateToProps = (state) => ({
 });
 
 // Connect React to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

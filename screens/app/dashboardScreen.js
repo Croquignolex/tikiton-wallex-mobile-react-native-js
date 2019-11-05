@@ -1,65 +1,33 @@
 import React from 'react'
+import PropTypes from "prop-types";
+import { View, StyleSheet } from 'react-native'
+
 import { connect } from 'react-redux'
 import COLORS from '../../helpers/colorHelper'
 import STYLES from '../../helpers/styleHelper'
-import {SafeAreaView, StyleSheet, Dimensions, Text, KeyboardAvoidingView} from 'react-native'
 
-class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-        console.log(props)
-    }
-
-    render() {
-        return (
-            <SafeAreaView style={[styles.mainContainer, STYLES.middle]}>
-                <SafeAreaView style={[{flex: 1}, STYLES.middle]}>
-                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
-                        {/*Button are*/}
-                        <SafeAreaView style={STYLES.middle}>
-                            <Text style={[{color: COLORS.theme}, styles.createButtonText]}>
-                                Dashboard page
-                            </Text>
-                        </SafeAreaView>
-                    </KeyboardAvoidingView>
-                </SafeAreaView>
-            </SafeAreaView>
-        )
-    }
-}
-
-const { width, height } = Dimensions.get("screen");
+const DashboardScreen = ({navigation, dispatch}) => {
+    // TODO: Add float button for a new transaction
+    // Render
+    return (
+        <View />
+    )
+};
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        backgroundColor: COLORS.facebook
-    },
-    logo: {
-        width: 200,
-        height: 200,
-        resizeMode: 'contain'
-    },
-    createButton: {
-        marginTop: 25,
-        borderRadius: 3,
-        height: 16 * 2.75,
-        width: width * 0.5,
-        backgroundColor: COLORS.white,
-    },
-    createButtonText: {
-        fontSize: 14,
-        fontWeight: 'bold'
-    },
-    indicationText: {
-        fontSize: 14,
-        color: COLORS.white,
-        fontWeight: 'bold'
-    }
+
 });
 
+
+// Prop types from global store
+DashboardScreen.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
+};
+
+
 // Map dispatch function to component props
-const mapDispatchToProps = (dispatch) => ({
+/*const mapDispatchToProps = (dispatch) => ({
     dispatch: (action) => { dispatch(action)}
 });
 
@@ -69,4 +37,6 @@ const mapStateToProps = (state) => ({
 });
 
 // Connect React to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);*/
+
+export default DashboardScreen

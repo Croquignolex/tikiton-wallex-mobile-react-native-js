@@ -7,8 +7,10 @@ const IMAGES = {
     },
     logo: require('../assets/icon.png'),
     splash: require('../assets/splash.png'),
+    logoText: require('../assets/icon-text.png'),
     logoInvert: require('../assets/icon-invert.png'),
     splashInvert: require('../assets/splash-invert.png'),
+    logoTextInvert: require('../assets/icon-text-invert.png'),
 };
 
 export default IMAGES

@@ -4,14 +4,13 @@ import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import STYLES from '../../helpers/styleHelper'
 import IMAGES from '../../helpers/imageHelper'
-
 import COLORS from '../../helpers/colorHelper'
 import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import { emailChecker } from '../../helpers/formCheckerHelper'
 
-const Password = ({navigation}) => {
+const PasswordScreen = ({navigation}) => {
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
 
     // Recover password process
@@ -97,8 +96,8 @@ const Password = ({navigation}) => {
 const { width } = Dimensions.get("screen");
 
 // Prop types from global store
-Password.propTypes = {
+PasswordScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default Password
+export default PasswordScreen
