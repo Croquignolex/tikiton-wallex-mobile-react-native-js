@@ -5,15 +5,14 @@ import STYLES from '../../helpers/styleHelper'
 import { View, Dimensions, KeyboardAvoidingView, Alert } from 'react-native'
 
 import IMAGES from '../../helpers/imageHelper'
-import Input from '../../components/inputComponent'
-
 import COLORS from '../../helpers/colorHelper'
+import Input from '../../components/inputComponent'
 import Image from '../../components/imageComponent'
 import Button from '../../components/buttonComponent'
 import { setUserBasicData } from '../../redux/user/actions'
 import { emailChecker, passwordChecker } from '../../helpers/formCheckerHelper'
 
-const Login = ({navigation, dispatch}) => {
+const LoginScreen = ({navigation, dispatch}) => {
     const [email, setEmail] = useState({isValid: true, message: '', val: '', errorMessageColor: COLORS.white});
     const [password, setPassword] = useState({isValid: true, message: '', val: '',  errorMessageColor: COLORS.white});
 
@@ -116,7 +115,7 @@ const Login = ({navigation, dispatch}) => {
 const { width } = Dimensions.get("screen");
 
 // Prop types from global store
-Login.propTypes = {
+LoginScreen.propTypes = {
     dispatch: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
 };
@@ -132,4 +131,4 @@ const mapStateToProps = (state) => ({
 });
 
 // Connect React to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

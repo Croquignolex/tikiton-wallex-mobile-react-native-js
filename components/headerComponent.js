@@ -112,11 +112,11 @@ const CustomHeader = ({back, title, navigation, isDashboardScreen, isSearchScree
             </View>
 
             {/*Render dashboard header*/}
-            {isDashboardScreen  && (
+            {/*{isDashboardScreen  && (
                 <View style={STYLES.center}>
                     {renderTabs()}
                 </View>
-            )}
+            )}*/}
         </View>
     )
 };
